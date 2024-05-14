@@ -6,19 +6,19 @@ using ErrorOr;
 
 namespace AmigosConCola.Core.UseCases;
 
-public sealed class CreateAnimalUseCase
+public sealed class GetAllAnimalsUseCase
 {
     private readonly IAnimalRepository _animals;
 
-    public CreateAnimalUseCase(
+    public GetAllAnimalsUseCase(
         IAnimalRepository animals)
     {
         _animals = animals;
     }
 
-    public async Task<ErrorOr<Animal>> Invoke(CreateAnimalParams parameters)
+    public async Task<ErrorOr<IEnumerable<Animal>>> Invoke(PaginationParams parameters)
     {
-        var validator = new CreateAnimalParamsValidator();
+        var validator = new PaginationParamsValidator();
         var validationResult = validator.Validate(parameters);
 
         if (!validationResult.IsValid)
@@ -26,6 +26,6 @@ public sealed class CreateAnimalUseCase
             return validationResult.ToErrors();
         }
 
-        return await _animals.Create(parameters);
+        return await _animals.GetAll(parameters);
     }
 }

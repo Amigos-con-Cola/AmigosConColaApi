@@ -16,5 +16,5 @@ public interface IAnimalRepository
     /// </summary>
     /// <param name="parameters">Parameters related to pagination.</param>
     /// <returns>A list of all animals.</returns>
-    public Task<ErrorOr<IEnumerable<Animal>>> GetAll(GetAllAnimalsParams parameters);
+    public Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters);
 }
