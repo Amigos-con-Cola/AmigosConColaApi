@@ -6,5 +6,9 @@ create table animals
     gender    text    not null,
     image_url text,
     adopted   boolean not null default false,
-    species   text    not null
+    species   text    not null,
+    story     text,
+    location  text    not null,
+    weight    decimal not null,
+    code      text
 );

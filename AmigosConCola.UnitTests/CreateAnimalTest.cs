@@ -1,6 +1,6 @@
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
-using AmigosConCola.UnitTests.Extensions;
+using AmigosConCola.UnitTests.FakeData;
 using Moq;
 
 namespace AmigosConCola.UnitTests;

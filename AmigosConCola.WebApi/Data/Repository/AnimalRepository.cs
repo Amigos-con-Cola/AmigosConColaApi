@@ -23,14 +23,18 @@ public class AnimalRepository : IAnimalRepository
             Age = parameters.Age,
             Gender = parameters.Gender.ToString(),
             ImageUrl = parameters.ImageUrl,
-            Species = parameters.Species.ToString()
+            Species = parameters.Species.ToString(),
+            Weight = parameters.Weight,
+            Story = parameters.Story,
+            Code = parameters.Code,
+            Location = parameters.Location
         };
 
         var result = await _db.Animals.AddAsync(dto);
 
         await _db.SaveChangesAsync();
 
-        return result.Entity.toDomain();
+        return result.Entity.ToDomain();
     }
 
     public Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters)

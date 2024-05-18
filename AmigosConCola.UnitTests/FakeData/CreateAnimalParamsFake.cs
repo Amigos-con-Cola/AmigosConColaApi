@@ -3,7 +3,7 @@ using AmigosConCola.Core.Repositories;
 using Bogus;
 using Bogus.DataSets;
 
-namespace AmigosConCola.UnitTests.Extensions;
+namespace AmigosConCola.UnitTests.FakeData;
 
 public static class CreateAnimalParamsFake
 {
@@ -15,13 +15,18 @@ public static class CreateAnimalParamsFake
         var random = new Randomizer();
         var names = new Name();
         var url = new Images();
+        var lorem = new Lorem();
         return new CreateAnimalParams
         {
             Age = age ?? random.Int(1, 20),
             Name = name ?? names.FirstName(),
             Gender = AnimalGender.Male,
             ImageUrl = imageUrl ?? url.PicsumUrl(),
-            Species = AnimalSpecies.Cat
+            Species = AnimalSpecies.Cat,
+            Story = lorem.Paragraph(),
+            Code = random.String(),
+            Weight = random.Number(),
+            Location = random.String()
         };
     }
 }

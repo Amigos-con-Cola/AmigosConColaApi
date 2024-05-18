@@ -9,4 +9,8 @@ public sealed class Animal
     public string ImageUrl { get; set; } = null!;
     public bool Adopted { get; set; }
     public AnimalSpecies Species { get; set; }
+    public string? Story { get; set; }
+    public string? Location { get; set; }
+    public decimal Weight { get; set; }
+    public string? Code { get; set; }
 }

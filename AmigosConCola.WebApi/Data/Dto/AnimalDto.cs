@@ -28,7 +28,19 @@ public class AnimalDto
     [Column("species")]
     public string Species { get; set; } = null!;
 
-    public ErrorOr<Animal> toDomain()
+    [Column("story")]
+    public string? Story { get; set; }
+
+    [Column("location")]
+    public string? Location { get; set; }
+
+    [Column("code")]
+    public string? Code { get; set; }
+
+    [Column("weight")]
+    public decimal Weight { get; set; }
+
+    public ErrorOr<Animal> ToDomain()
     {
         AnimalGender gender;
         AnimalSpecies species;
@@ -51,7 +63,11 @@ public class AnimalDto
             Gender = gender,
             Species = species,
             ImageUrl = ImageUrl,
-            Adopted = Adopted
+            Adopted = Adopted,
+            Story = Story,
+            Location = Location,
+            Code = Code,
+            Weight = Weight
         };
     }
 }

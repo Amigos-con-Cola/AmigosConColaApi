@@ -26,6 +26,18 @@ public class AnimalResponse
     [JsonPropertyName("species")]
     public string Species { get; set; } = null!;
 
+    [JsonPropertyName("historia")]
+    public string? Story { get; set; }
+
+    [JsonPropertyName("ubicacion")]
+    public string? Location { get; set; }
+
+    [JsonPropertyName("peso")]
+    public decimal Weight { get; set; }
+
+    [JsonPropertyName("codigo")]
+    public string? Code { get; set; }
+
     public static AnimalResponse FromDomain(Animal animal)
     {
         return new AnimalResponse
@@ -36,7 +48,11 @@ public class AnimalResponse
             Gender = animal.Gender.ToString(),
             Species = animal.Species.ToString(),
             ImageUrl = animal.ImageUrl,
-            Adopted = animal.Adopted
+            Adopted = animal.Adopted,
+            Story = animal.Story,
+            Location = animal.Location,
+            Weight = animal.Weight,
+            Code = animal.Code
         };
     }
 }
