@@ -38,7 +38,11 @@ public class AnimalController : ControllerBase
             Age = request.Age,
             Gender = gender,
             Species = species,
-            ImageUrl = request.ImageUrl
+            ImageUrl = request.ImageUrl,
+            Location = request.Location,
+            Code = request.Code,
+            Story = request.Story,
+            Weight = request.Weight
         });
 
         if (result.IsError)

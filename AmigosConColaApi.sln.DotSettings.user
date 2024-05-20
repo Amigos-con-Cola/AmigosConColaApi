@@ -4,5 +4,6 @@
     &lt;TestId&gt;xUnit::E823451B-103D-4DA2-A1E5-604BA1C49A9E::net8.0::AmigosConCola.UnitTests.CreateAnimalTest&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::E823451B-103D-4DA2-A1E5-604BA1C49A9E::net8.0::AmigosConCola.UnitTests.GetAllAnimalsTest.Test_getting_all_animals_with_valid_parameters_return_a_list_of_animals&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::E823451B-103D-4DA2-A1E5-604BA1C49A9E::net8.0::AmigosConCola.UnitTests.GetAllAnimalsTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
