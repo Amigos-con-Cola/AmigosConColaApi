@@ -8,12 +8,12 @@ namespace AmigosConCola.WebApi.Controllers;
 
 [ApiController]
 [Route("/api/animals/")]
-public class AnimalController : ControllerBase
+public class AnimalControllerGetAllAnimals : ControllerBase
 {
     private readonly CreateAnimalUseCase _createAnimal;
     private readonly GetAllAnimalsUseCase _getAllAnimals;
 
-    public AnimalController(
+    public AnimalControllerGetAllAnimals(
         CreateAnimalUseCase createAnimal,
         GetAllAnimalsUseCase getAllAnimals)
     {

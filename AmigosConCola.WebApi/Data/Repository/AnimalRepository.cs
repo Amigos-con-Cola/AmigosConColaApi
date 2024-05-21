@@ -41,7 +41,7 @@ public class AnimalRepository : IAnimalRepository
         return _db
             .Animals
             .OrderBy(x => x.Id)
-            .Skip(parameters.Page * parameters.PerPage)
+            .Skip((parameters.Page - 1) * parameters.PerPage)
             .Take(parameters.PerPage)
             .Select(x => x.ToDomain().Value)
             .AsEnumerable()

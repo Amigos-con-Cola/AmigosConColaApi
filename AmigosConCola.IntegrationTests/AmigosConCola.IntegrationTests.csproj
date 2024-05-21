@@ -10,21 +10,30 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bogus" Version="35.5.1" />
-        <PackageReference Include="coverlet.collector" Version="6.0.0" />
-        <PackageReference Include="FluentAssertions" Version="6.12.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.5" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-        <PackageReference Include="xunit" Version="2.5.3" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+        <PackageReference Include="Bogus" Version="35.5.1"/>
+        <PackageReference Include="coverlet.collector" Version="6.0.0"/>
+        <PackageReference Include="FluentAssertions" Version="6.12.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.5"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
+        <PackageReference Include="Testcontainers" Version="3.8.0"/>
+        <PackageReference Include="Testcontainers.Postgresql" Version="3.8.0"/>
+        <PackageReference Include="xunit" Version="2.5.3"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Xunit" />
+        <Using Include="Xunit"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\AmigosConCola.WebApi\AmigosConCola.WebApi.csproj" />
+        <ProjectReference Include="..\AmigosConCola.WebApi\AmigosConCola.WebApi.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="../db/schema.sql">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Link>schema.sql</Link>
+        </Content>
     </ItemGroup>
 
 </Project>

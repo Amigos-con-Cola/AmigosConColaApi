@@ -17,12 +17,12 @@ public class CreateAnimalRequestFake
             Name = name.FirstName(),
             Age = random.Number(1, 20),
             Gender = random.ArrayElement(new[] { "Male", "Female" }),
-            ImageUrl = random.String(),
+            ImageUrl = lorem.Word(),
             Species = random.ArrayElement(new[] { "Dog", "Cat" }),
             Story = lorem.Paragraph(),
-            Location = random.String(),
+            Location = lorem.Word(),
             Weight = random.Number(),
-            Code = random.String()
+            Code = lorem.Word()
         };
     }
 }
