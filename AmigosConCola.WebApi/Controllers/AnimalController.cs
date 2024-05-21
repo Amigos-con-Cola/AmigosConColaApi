@@ -11,11 +11,37 @@ namespace AmigosConCola.WebApi.Controllers;
 public class AnimalController : ControllerBase
 {
     private readonly CreateAnimalUseCase _createAnimal;
+    private readonly GetAllAnimalsUseCase _getAllAnimals;
 
     public AnimalController(
-        CreateAnimalUseCase createAnimal)
+        CreateAnimalUseCase createAnimal,
+        GetAllAnimalsUseCase getAllAnimals)
     {
         _createAnimal = createAnimal;
+        _getAllAnimals = getAllAnimals;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index(
+        [FromQuery]
+        int? page,
+        [FromQuery]
+        int? perPage)
+    {
+        var result = await _getAllAnimals.Invoke(new PaginationParams
+        {
+            Page = page ?? 1,
+            PerPage = perPage ?? 10
+        });
+
+        if (result.IsError)
+        {
+            foreach (var error in result.Errors)
+                ModelState.AddModelError(error.Code, error.Description);
+            return ValidationProblem(ModelState);
+        }
+
+        return Ok(result.Value.Select(AnimalResponse.FromDomain));
     }
 
     [HttpPost]

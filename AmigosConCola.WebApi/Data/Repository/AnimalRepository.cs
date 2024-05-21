@@ -26,8 +26,7 @@ public class AnimalRepository : IAnimalRepository
             Species = parameters.Species.ToString(),
             Weight = parameters.Weight,
             Story = parameters.Story,
-            Code = parameters.Code,
-            Location = parameters.Location
+            Code = parameters.Code, Location = parameters.Location
         };
 
         var result = await _db.Animals.AddAsync(dto);
@@ -37,8 +36,15 @@ public class AnimalRepository : IAnimalRepository
         return result.Entity.ToDomain();
     }
 
-    public Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters)
+    public async Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters)
     {
-        throw new NotImplementedException();
+        return _db
+            .Animals
+            .OrderBy(x => x.Id)
+            .Skip(parameters.Page * parameters.PerPage)
+            .Take(parameters.PerPage)
+            .Select(x => x.ToDomain().Value)
+            .AsEnumerable()
+            .ToErrorOr();
     }
 }

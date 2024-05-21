@@ -18,6 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(x =>
 
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.AddScoped<CreateAnimalUseCase>();
+builder.Services.AddScoped<GetAllAnimalsUseCase>();
 
 builder.Services.AddControllers();
 
