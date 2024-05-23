@@ -3,6 +3,7 @@ using AmigosConCola.Core.Repositories;
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Data.Dto;
 using ErrorOr;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmigosConCola.WebApi.Data.Repository;
 
@@ -46,5 +47,17 @@ public class AnimalRepository : IAnimalRepository
             .Select(x => x.ToDomain().Value)
             .AsEnumerable()
             .ToErrorOr();
+    }
+
+    public async Task<ErrorOr<Animal>> GetById(int id)
+    {
+        var animal = await _db.Animals.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+        if (animal is null)
+        {
+            return Error.NotFound(description: $"There is no animal with the id {id}");
+        }
+
+        return animal.ToDomain();
     }
 }

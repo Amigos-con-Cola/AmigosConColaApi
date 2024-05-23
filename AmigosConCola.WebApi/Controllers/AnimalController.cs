@@ -2,23 +2,30 @@ using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
 using AmigosConCola.WebApi.Presentation;
+using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmigosConCola.WebApi.Controllers;
 
 [ApiController]
 [Route("/api/animals/")]
-public class AnimalControllerGetAllAnimals : ControllerBase
+public class AnimalController : BaseApiController
 {
     private readonly CreateAnimalUseCase _createAnimal;
     private readonly GetAllAnimalsUseCase _getAllAnimals;
+    private readonly GetAnimalByIdUseCase _getAnimalById;
+    private readonly ILogger<AnimalController> _logger;
 
-    public AnimalControllerGetAllAnimals(
+    public AnimalController(
+        ILogger<AnimalController> logger,
         CreateAnimalUseCase createAnimal,
-        GetAllAnimalsUseCase getAllAnimals)
+        GetAllAnimalsUseCase getAllAnimals,
+        GetAnimalByIdUseCase getAnimalById)
     {
+        _logger = logger;
         _createAnimal = createAnimal;
         _getAllAnimals = getAllAnimals;
+        _getAnimalById = getAnimalById;
     }
 
     [HttpGet]
@@ -36,12 +43,28 @@ public class AnimalControllerGetAllAnimals : ControllerBase
 
         if (result.IsError)
         {
-            foreach (var error in result.Errors)
-                ModelState.AddModelError(error.Code, error.Description);
-            return ValidationProblem(ModelState);
+            return ValidationErrors(result.Errors);
         }
 
         return Ok(result.Value.Select(AnimalResponse.FromDomain));
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var result = await _getAnimalById.Invoke(id);
+
+        if (result.IsError)
+        {
+            if (result.Errors.Count == 1 && result.FirstError.Type == ErrorType.NotFound)
+            {
+                return NotFound(result.FirstError.Description);
+            }
+
+            return ValidationErrors(result.Errors);
+        }
+
+        return Ok(AnimalResponse.FromDomain(result.Value));
     }
 
     [HttpPost]
@@ -73,9 +96,7 @@ public class AnimalControllerGetAllAnimals : ControllerBase
 
         if (result.IsError)
         {
-            foreach (var error in result.Errors)
-                ModelState.AddModelError(error.Code, error.Description);
-            return ValidationProblem(ModelState);
+            return ValidationErrors(result.Errors);
         }
 
         return Created(

@@ -5,7 +5,7 @@ using AmigosConCola.WebApi.Presentation;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AmigosConCola.IntegrationTests;
+namespace AmigosConCola.IntegrationTests.AnimalControllerTests;
 
 public class AnimalControllerGetAllAnimalsNonEmptyTests : IClassFixture<TestWebApplicationFactory<Program>>
 {

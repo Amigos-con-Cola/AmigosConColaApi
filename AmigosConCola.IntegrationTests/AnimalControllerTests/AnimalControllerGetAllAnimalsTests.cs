@@ -2,7 +2,7 @@ using System.Net.Http.Json;
 using AmigosConCola.WebApi.Presentation;
 using FluentAssertions;
 
-namespace AmigosConCola.IntegrationTests;
+namespace AmigosConCola.IntegrationTests.AnimalControllerTests;
 
 public class AnimalControllerGetAllAnimalsTests : IClassFixture<TestWebApplicationFactory<Program>>
 {

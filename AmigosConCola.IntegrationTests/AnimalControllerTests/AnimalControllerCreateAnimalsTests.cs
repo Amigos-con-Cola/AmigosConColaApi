@@ -3,7 +3,7 @@ using AmigosConCola.IntegrationTests.FakeData;
 using AmigosConCola.WebApi.Presentation;
 using FluentAssertions;
 
-namespace AmigosConCola.IntegrationTests;
+namespace AmigosConCola.IntegrationTests.AnimalControllerTests;
 
 public class AnimalControllerCreateAnimalsTests : IClassFixture<TestWebApplicationFactory<Program>>
 {

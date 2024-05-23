@@ -16,4 +16,8 @@
         <ProjectReference Include="..\AmigosConCola.Core\AmigosConCola.Core.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Extensions\"/>
+    </ItemGroup>
+
 </Project>
