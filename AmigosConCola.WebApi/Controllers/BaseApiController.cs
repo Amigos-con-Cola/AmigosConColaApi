@@ -5,6 +5,7 @@ namespace AmigosConCola.WebApi.Controllers;
 
 public class BaseApiController : ControllerBase
 {
+    [NonAction]
     public IActionResult ValidationErrors(List<Error> errors)
     {
         foreach (var error in errors)
