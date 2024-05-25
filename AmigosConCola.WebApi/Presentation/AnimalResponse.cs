@@ -8,22 +8,22 @@ public class AnimalResponse
     [JsonPropertyName("id")]
     public int Id { get; set; }
 
-    [JsonPropertyName("name")]
+    [JsonPropertyName("nombre")]
     public string Name { get; set; } = null!;
 
-    [JsonPropertyName("age")]
+    [JsonPropertyName("edad")]
     public int Age { get; set; }
 
-    [JsonPropertyName("gender")]
+    [JsonPropertyName("genero")]
     public string Gender { get; set; } = null!;
 
-    [JsonPropertyName("image_url")]
+    [JsonPropertyName("imagen")]
     public string ImageUrl { get; set; } = null!;
 
-    [JsonPropertyName("adopted")]
+    [JsonPropertyName("adoptado")]
     public bool Adopted { get; set; }
 
-    [JsonPropertyName("species")]
+    [JsonPropertyName("especie")]
     public string Species { get; set; } = null!;
 
     [JsonPropertyName("historia")]
