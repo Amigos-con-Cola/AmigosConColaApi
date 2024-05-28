@@ -40,6 +40,7 @@ public class CreateAnimalTest
         // Arrange
         var mock = new Mock<IAnimalRepository>();
         var createAnimalParams = CreateAnimalParamsFake.Get(name: "");
+
         var animals = mock.Object;
         var createAnimal = new CreateAnimalUseCase(animals);
 
@@ -52,11 +53,19 @@ public class CreateAnimalTest
     }
 
     [Fact]
-    public async void Test_creating_an_animal_with_an_empty_image_url_returns_an_error()
+    public async void Test_creating_an_animal_with_an_empty_image_url_returns_an_animal_with_an_empty_image_url()
     {
         // Arrange
         var mock = new Mock<IAnimalRepository>();
         var createAnimalParams = CreateAnimalParamsFake.Get(imageUrl: "");
+        var expectedAnimal = AnimalFake.Get(
+            createAnimalParams.Age,
+            createAnimalParams.Name,
+            createAnimalParams.ImageUrl);
+
+        mock.Setup(x => x.Create(createAnimalParams))
+            .ReturnsAsync(expectedAnimal);
+
         var animals = mock.Object;
         var createAnimal = new CreateAnimalUseCase(animals);
 
@@ -64,8 +73,10 @@ public class CreateAnimalTest
         var result = await createAnimal.Invoke(createAnimalParams);
 
         // Assert
-        Assert.True(result.IsError);
-        Assert.Equal("ImageUrl", result.FirstError.Code);
+        Assert.True(!result.IsError);
+        Assert.NotNull(result.Value);
+        Assert.NotNull(result.Value.ImageUrl);
+        Assert.Equal("", result.Value.ImageUrl);
     }
 
     [Fact]
