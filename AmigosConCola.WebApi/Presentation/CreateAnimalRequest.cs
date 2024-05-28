@@ -14,7 +14,7 @@ public class CreateAnimalRequest
     public string Gender { get; set; } = null!;
 
     [JsonPropertyName("imagen")]
-    public string ImageUrl { get; set; } = null!;
+    public string? ImageUrl { get; set; }
 
     [JsonPropertyName("especie")]
     public string Species { get; set; } = null!;

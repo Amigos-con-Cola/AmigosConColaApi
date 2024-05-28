@@ -8,5 +8,6 @@
     &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerGetAnimalByIdNonExistingTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests.AnimalControllerGetAnimalByIdNonExistingTests&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests.AnimalControllerGetAnimalByIdExistingTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests.AnimalControllerCreateAnimalsTests.Test_creating_an_animal_with_null_image_returns_success&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

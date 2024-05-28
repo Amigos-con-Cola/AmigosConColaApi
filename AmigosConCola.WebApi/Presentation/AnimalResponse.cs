@@ -18,7 +18,7 @@ public class AnimalResponse
     public string Gender { get; set; } = null!;
 
     [JsonPropertyName("imagen")]
-    public string ImageUrl { get; set; } = null!;
+    public string? ImageUrl { get; set; }
 
     [JsonPropertyName("adoptado")]
     public bool Adopted { get; set; }
