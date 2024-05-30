@@ -12,3 +12,13 @@ create table animals
     weight    decimal not null,
     code      text
 );
+
+create table vacunaciones
+(
+    id        serial primary key,
+    id_animal integer not null,
+    name      text    not null,
+    date      date    not null,
+
+    foreign key (id_animal) references animals (id)
+);
