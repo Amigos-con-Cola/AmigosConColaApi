@@ -37,9 +37,9 @@ public class AnimalRepository : IAnimalRepository
         return result.Entity.ToDomain();
     }
 
-    public async Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters)
+    public Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters)
     {
-        return _db
+        var result = _db
             .Animals
             .OrderBy(x => x.Id)
             .Skip((parameters.Page - 1) * parameters.PerPage)
@@ -47,6 +47,7 @@ public class AnimalRepository : IAnimalRepository
             .Select(x => x.ToDomain().Value)
             .AsEnumerable()
             .ToErrorOr();
+        return Task.FromResult(result);
     }
 
     public async Task<ErrorOr<Animal>> GetById(int id)

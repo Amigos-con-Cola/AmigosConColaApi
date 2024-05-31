@@ -2,6 +2,7 @@ using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Data.Repository;
+using AmigosConCola.WebApi.Presentation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,12 +19,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(x =>
 
 builder.Services.AddCors();
 
+// Animales
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.AddScoped<CreateAnimalUseCase>();
 builder.Services.AddScoped<GetAllAnimalsUseCase>();
 builder.Services.AddScoped<GetAnimalByIdUseCase>();
 
-builder.Services.AddControllers();
+// Vacunaciones
+builder.Services.AddScoped<IVacunacionRepository, VacunacionRepository>();
+builder.Services.AddScoped<CreateVacunacionUseCase>();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(x =>
+    {
+        //
+        x.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    });
+
 
 var app = builder.Build();
 

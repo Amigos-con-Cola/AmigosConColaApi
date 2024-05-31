@@ -20,7 +20,7 @@ public class AnimalDto
     public string Gender { get; set; } = null!;
 
     [Column("image_url")]
-    public string ImageUrl { get; set; } = null!;
+    public string? ImageUrl { get; set; }
 
     [Column("adopted")]
     public bool Adopted { get; set; }
@@ -39,6 +39,8 @@ public class AnimalDto
 
     [Column("weight")]
     public decimal Weight { get; set; }
+
+    public ICollection<VacunacionDto> Vacunaciones { get; } = null!;
 
     public ErrorOr<Animal> ToDomain()
     {

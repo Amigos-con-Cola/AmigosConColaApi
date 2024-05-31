@@ -11,4 +11,14 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<AnimalDto> Animals { get; set; } = null!;
+    public DbSet<VacunacionDto> Vacunaciones { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AnimalDto>()
+            .HasMany(x => x.Vacunaciones)
+            .WithOne(x => x.Animal)
+            .HasForeignKey(x => x.IdAnimal)
+            .HasPrincipalKey(x => x.Id);
+    }
 }
