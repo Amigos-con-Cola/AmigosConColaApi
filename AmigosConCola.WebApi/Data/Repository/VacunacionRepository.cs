@@ -38,4 +38,22 @@ public class VacunacionRepository : IVacunacionRepository
 
         return result.Entity.ToDomain();
     }
+
+    public async Task<ErrorOr<IEnumerable<Vacunacion>>> FindAll(int animalId)
+    {
+        var animal = await _db.Animals
+            .Where(x => x.Id == animalId)
+            .Include(x => x.Vacunaciones)
+            .FirstOrDefaultAsync();
+
+
+        if (animal is null)
+        {
+            return Error.NotFound(description: "No such animal with that id");
+        }
+
+        return animal.Vacunaciones
+            .Select(x => x.ToDomain())
+            .ToErrorOr();
+    }
 }

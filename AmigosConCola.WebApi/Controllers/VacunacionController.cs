@@ -11,11 +11,27 @@ namespace AmigosConCola.WebApi.Controllers;
 public class VacunacionController : BaseApiController
 {
     private readonly CreateVacunacionUseCase _createVacunacion;
+    private readonly FindAllVacunacionesUseCase _findAllVacunaciones;
 
     public VacunacionController(
-        CreateVacunacionUseCase createVacunacion)
+        CreateVacunacionUseCase createVacunacion,
+        FindAllVacunacionesUseCase findAllVacunaciones)
     {
         _createVacunacion = createVacunacion;
+        _findAllVacunaciones = findAllVacunaciones;
+    }
+
+    [HttpGet("{animalId:int}/vacunaciones")]
+    public async Task<IActionResult> Index(int animalId)
+    {
+        var result = await _findAllVacunaciones.Invoke(animalId);
+
+        if (result.IsError && result.FirstError.Type == ErrorType.NotFound)
+        {
+            return NotFound(result.FirstError.Description);
+        }
+
+        return Ok(result.Value);
     }
 
     [HttpPost("{animalId:int}/vacunaciones")]

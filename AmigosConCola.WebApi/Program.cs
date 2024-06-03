@@ -28,6 +28,7 @@ builder.Services.AddScoped<GetAnimalByIdUseCase>();
 // Vacunaciones
 builder.Services.AddScoped<IVacunacionRepository, VacunacionRepository>();
 builder.Services.AddScoped<CreateVacunacionUseCase>();
+builder.Services.AddScoped<FindAllVacunacionesUseCase>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>
