@@ -9,7 +9,8 @@ public class AnimalDtoFake
     public static AnimalDto Get(
         int? age = null,
         string? name = null,
-        string? imageUrl = null)
+        string? imageUrl = null,
+        string? species = null)
     {
         var random = new Randomizer();
         var names = new Name();
@@ -20,9 +21,9 @@ public class AnimalDtoFake
             Id = random.Int(),
             Age = age ?? random.Int(1, 20),
             Name = name ?? names.FirstName(),
-            Gender = random.ArrayElement(new[] { "Male", "Female" }),
+            Gender = random.ArrayElement(["Male", "Female"]),
             ImageUrl = imageUrl ?? url.PicsumUrl(),
-            Species = random.ArrayElement(new[] { "Cat", "Dog" }),
+            Species = species ?? random.ArrayElement(["Cat", "Dog"]),
             Story = lorem.Paragraph(),
             Weight = random.Number(),
             Location = lorem.Word(),

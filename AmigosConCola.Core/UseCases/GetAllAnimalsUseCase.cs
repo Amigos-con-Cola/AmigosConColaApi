@@ -16,7 +16,7 @@ public sealed class GetAllAnimalsUseCase
         _animals = animals;
     }
 
-    public async Task<ErrorOr<IEnumerable<Animal>>> Invoke(PaginationParams parameters)
+    public async Task<ErrorOr<IEnumerable<Animal>>> Invoke(PaginationParams parameters, GetAllAnimalsFilters filters)
     {
         var validator = new PaginationParamsValidator();
         var validationResult = validator.Validate(parameters);
@@ -26,6 +26,6 @@ public sealed class GetAllAnimalsUseCase
             return validationResult.ToErrors();
         }
 
-        return await _animals.GetAll(parameters);
+        return await _animals.GetAll(parameters, filters);
     }
 }

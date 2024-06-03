@@ -13,5 +13,7 @@
     &lt;TestId&gt;xUnit::E823451B-103D-4DA2-A1E5-604BA1C49A9E::net8.0::AmigosConCola.UnitTests.CreateVacunacionTest.Test_creating_a_vacunacion_with_an_invalid_name_returns_an_error&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.VacunacionControllerTests.VacunacionControllerCreateVacunacionTests.Test_creating_a_vacunacion_with_valid_data_returns_the_vacunacion&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.VacunacionControllerTests.VacunacionController_CreateVacunacion_WithInvalidAnimalId_Tests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests.AnimalController_GetAllAnimals_SpeciesFilterTests.Test_getting_all_animals_with_species_filter_works&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests.AnimalController_GetAllAnimals_SpeciesFilterTests.Test_providing_an_invalid_species_filter_returns_bad_request&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

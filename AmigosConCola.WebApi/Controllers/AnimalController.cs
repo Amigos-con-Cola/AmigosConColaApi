@@ -33,13 +33,31 @@ public class AnimalController : BaseApiController
         [FromQuery]
         int? page,
         [FromQuery]
-        int? perPage)
+        int? perPage,
+        [FromQuery]
+        string? species)
     {
-        var result = await _getAllAnimals.Invoke(new PaginationParams
+        GetAllAnimalsFilters filters = new();
+
+        if (species is not null)
+        {
+            if (Enum.TryParse(species, out AnimalSpecies speciesFilter))
+            {
+                filters.Species = speciesFilter;
+            }
+            else
+            {
+                return Problem(statusCode: 400, detail: $"Invalid animal species: {species}");
+            }
+        }
+
+        var paginationParams = new PaginationParams
         {
             Page = page ?? 1,
             PerPage = perPage ?? 10
-        });
+        };
+
+        var result = await _getAllAnimals.Invoke(paginationParams, filters);
 
         if (result.IsError)
         {

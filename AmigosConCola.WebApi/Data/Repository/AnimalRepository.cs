@@ -37,16 +37,23 @@ public class AnimalRepository : IAnimalRepository
         return result.Entity.ToDomain();
     }
 
-    public Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters)
+    public Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters, GetAllAnimalsFilters filters)
     {
-        var result = _db
-            .Animals
+        var query = _db.Animals.AsQueryable();
+
+        if (filters.Species is not null)
+        {
+            query = query.Where(x => x.Species.ToLower() == filters.Species.ToString()!.ToLower());
+        }
+
+        var result = query
             .OrderBy(x => x.Id)
             .Skip((parameters.Page - 1) * parameters.PerPage)
             .Take(parameters.PerPage)
             .Select(x => x.ToDomain().Value)
             .AsEnumerable()
             .ToErrorOr();
+
         return Task.FromResult(result);
     }
 

@@ -18,15 +18,16 @@ public class GetAllAnimalsTest
             PerPage = 10,
             Page = 1
         };
+        var filters = new GetAllAnimalsFilters();
 
-        mock.Setup(x => x.GetAll(getAllAnimalsParams))
+        mock.Setup(x => x.GetAll(getAllAnimalsParams, filters))
             .ReturnsAsync(Enumerable.Empty<Animal>().ToErrorOr());
 
         var animals = mock.Object;
         var getAllAnimals = new GetAllAnimalsUseCase(animals);
 
         // Act
-        var result = await getAllAnimals.Invoke(getAllAnimalsParams);
+        var result = await getAllAnimals.Invoke(getAllAnimalsParams, filters);
 
         // Assert
         Assert.True(!result.IsError);
@@ -46,10 +47,11 @@ public class GetAllAnimalsTest
             Page = page,
             PerPage = 10
         };
+        var filters = new GetAllAnimalsFilters();
         var getAllAnimals = new GetAllAnimalsUseCase(animals);
 
         // Act
-        var result = await getAllAnimals.Invoke(parameters);
+        var result = await getAllAnimals.Invoke(parameters, filters);
 
         // Assert
         Assert.True(result.IsError);
@@ -70,10 +72,11 @@ public class GetAllAnimalsTest
             Page = 1,
             PerPage = perPage
         };
+        var filters = new GetAllAnimalsFilters();
         var getAllAnimals = new GetAllAnimalsUseCase(animals);
 
         // Act
-        var result = await getAllAnimals.Invoke(parameters);
+        var result = await getAllAnimals.Invoke(parameters, filters);
 
         // Assert
         Assert.True(result.IsError);
