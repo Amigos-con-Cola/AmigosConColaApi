@@ -4,11 +4,13 @@ using AmigosConCola.IntegrationTests.FakeData;
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Presentation;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AmigosConCola.IntegrationTests.AnimalControllerTests;
 
-public class AnimalController_GetAllAnimals_SpeciesFilterTests : IClassFixture<TestWebApplicationFactory<Program>>
+public class AnimalController_GetAllAnimals_SpeciesFilterTests : IClassFixture<TestWebApplicationFactory<Program>>,
+    IDisposable
 {
     private readonly TestWebApplicationFactory<Program> _factory;
 
@@ -20,9 +22,21 @@ public class AnimalController_GetAllAnimals_SpeciesFilterTests : IClassFixture<T
         var scopedServices = scope.ServiceProvider;
         var db = scopedServices.GetRequiredService<ApplicationDbContext>();
 
-        db.Animals.AddRange(Enumerable.Range(0, 4).Select(_ => AnimalDtoFake.Get(species: "Dog")));
-        db.Animals.AddRange(Enumerable.Range(0, 4).Select(_ => AnimalDtoFake.Get(species: "Cat")));
+        var dogs = Enumerable.Range(0, 4).Select(_ => AnimalDtoFake.Get(species: "Dog")).ToList();
+        var cats = Enumerable.Range(0, 4).Select(_ => AnimalDtoFake.Get(species: "Cat")).ToList();
+
+        db.Animals.AddRange(dogs);
+        db.Animals.AddRange(cats);
+
         db.SaveChanges();
+    }
+
+    public void Dispose()
+    {
+        using var scope = _factory.Services.CreateScope();
+        var scopedServices = scope.ServiceProvider;
+        var db = scopedServices.GetRequiredService<ApplicationDbContext>();
+        db.Database.ExecuteSqlRaw("delete from animals");
     }
 
     [Fact]
@@ -39,11 +53,17 @@ public class AnimalController_GetAllAnimals_SpeciesFilterTests : IClassFixture<T
         dogsResponse.EnsureSuccessStatusCode();
         catsResponse.EnsureSuccessStatusCode();
 
-        var dogs = await dogsResponse.Content.ReadFromJsonAsync<IEnumerable<AnimalResponse>>();
-        var cats = await catsResponse.Content.ReadFromJsonAsync<IEnumerable<AnimalResponse>>();
+        var dogs = await dogsResponse.Content.ReadFromJsonAsync<PaginatedDataResponse<AnimalResponse>>();
+        var cats = await catsResponse.Content.ReadFromJsonAsync<PaginatedDataResponse<AnimalResponse>>();
 
-        dogs.Should().HaveCount(4);
-        cats.Should().HaveCount(4);
+        dogs?.TotalItems.Should().Be(8);
+        cats?.TotalItems.Should().Be(8);
+
+        dogs?.TotalPages.Should().Be(1);
+        cats?.TotalPages.Should().Be(1);
+
+        dogs?.Data.Should().HaveCount(4);
+        cats?.Data.Should().HaveCount(4);
     }
 
     [Fact]

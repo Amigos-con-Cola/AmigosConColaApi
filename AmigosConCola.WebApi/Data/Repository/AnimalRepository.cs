@@ -57,6 +57,11 @@ public class AnimalRepository : IAnimalRepository
         return Task.FromResult(result);
     }
 
+    public async Task<int> CountAll()
+    {
+        return await _db.Animals.CountAsync();
+    }
+
     public async Task<ErrorOr<Animal>> GetById(int id)
     {
         var animal = await _db.Animals.Where(x => x.Id == id).FirstOrDefaultAsync();

@@ -25,8 +25,8 @@ public class AnimalControllerGetAllAnimalsTests : IClassFixture<TestWebApplicati
         // Assert
         response.EnsureSuccessStatusCode();
 
-        var animals = await response.Content.ReadFromJsonAsync<IEnumerable<AnimalResponse>>();
-        animals.Should().BeEmpty();
+        var animals = await response.Content.ReadFromJsonAsync<PaginatedDataResponse<AnimalResponse>>();
+        animals?.Data.Should().BeEmpty();
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class AnimalControllerGetAllAnimalsTests : IClassFixture<TestWebApplicati
         // Assert
         response.EnsureSuccessStatusCode();
 
-        var animals = await response.Content.ReadFromJsonAsync<IEnumerable<AnimalResponse>>();
-        animals.Should().BeEmpty();
+        var animals = await response.Content.ReadFromJsonAsync<PaginatedDataResponse<AnimalResponse>>();
+        animals?.Data.Should().BeEmpty();
     }
 }

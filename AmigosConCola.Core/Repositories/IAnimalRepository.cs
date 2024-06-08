@@ -19,6 +19,12 @@ public interface IAnimalRepository
     public Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters, GetAllAnimalsFilters filters);
 
     /// <summary>
+    ///     Get a count of all animals.
+    /// </summary>
+    /// <returns>The total number of animals.</returns>
+    public Task<int> CountAll();
+
+    /// <summary>
     ///     Get an animal by its id.
     /// </summary>
     /// <param name="id">The id of the animal</param>

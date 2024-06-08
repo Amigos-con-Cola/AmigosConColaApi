@@ -11,6 +11,7 @@ namespace AmigosConCola.WebApi.Controllers;
 [Route("/api/animals/")]
 public class AnimalController : BaseApiController
 {
+    private readonly CountAllAnimalsUseCase _countAllAnimals;
     private readonly CreateAnimalUseCase _createAnimal;
     private readonly GetAllAnimalsUseCase _getAllAnimals;
     private readonly GetAnimalByIdUseCase _getAnimalById;
@@ -20,12 +21,14 @@ public class AnimalController : BaseApiController
         ILogger<AnimalController> logger,
         CreateAnimalUseCase createAnimal,
         GetAllAnimalsUseCase getAllAnimals,
+        CountAllAnimalsUseCase countAllAnimals,
         GetAnimalByIdUseCase getAnimalById)
     {
         _logger = logger;
         _createAnimal = createAnimal;
         _getAllAnimals = getAllAnimals;
         _getAnimalById = getAnimalById;
+        _countAllAnimals = countAllAnimals;
     }
 
     [HttpGet]
@@ -64,7 +67,18 @@ public class AnimalController : BaseApiController
             return ValidationErrors(result.Errors);
         }
 
-        return Ok(result.Value.Select(AnimalResponse.FromDomain));
+        var count = await _countAllAnimals.Invoke();
+
+        var responseData = result.Value.Select(AnimalResponse.FromDomain);
+        var response = new PaginatedDataResponse<AnimalResponse>
+        {
+            Data = responseData,
+            NextPage = paginationParams.Page + 1,
+            TotalItems = count,
+            TotalPages = (int)Math.Ceiling((float)count / paginationParams.PerPage)
+        };
+
+        return Ok(response);
     }
 
     [HttpGet("{id:int}")]

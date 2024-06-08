@@ -3,6 +3,7 @@ using AmigosConCola.IntegrationTests.FakeData;
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Presentation;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AmigosConCola.IntegrationTests.AnimalControllerTests;
@@ -27,12 +28,8 @@ public class AnimalControllerGetAllAnimalsNonEmptyTests : IClassFixture<TestWebA
         var db = scopedServices.GetRequiredService<ApplicationDbContext>();
 
         var client = _factory.CreateClient();
-        var animalDtos = Enumerable
-            .Range(1, 20)
-            .Select(_ => AnimalDtoFake.Get())
-            .ToList();
 
-        animalDtos.ForEach(x => db.Animals.Add(x));
+        await db.Animals.AddRangeAsync(Enumerable.Range(1, 20).Select(_ => AnimalDtoFake.Get()));
         await db.SaveChangesAsync();
 
         // Act
@@ -41,7 +38,13 @@ public class AnimalControllerGetAllAnimalsNonEmptyTests : IClassFixture<TestWebA
         // Assert
         response.EnsureSuccessStatusCode();
 
-        var animals = await response.Content.ReadFromJsonAsync<IEnumerable<AnimalResponse>>();
-        animals.Should().HaveCount(perPage);
+        var animals = await response.Content.ReadFromJsonAsync<PaginatedDataResponse<AnimalResponse>>();
+
+        animals?.TotalItems.Should().Be(20);
+        animals?.TotalPages.Should().Be(2);
+        animals?.Data.Should().HaveCount(perPage);
+
+        // Cleanup
+        await db.Database.ExecuteSqlRawAsync("delete from animals");
     }
 }
