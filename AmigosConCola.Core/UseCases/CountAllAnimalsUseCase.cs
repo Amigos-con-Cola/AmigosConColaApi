@@ -11,8 +11,8 @@ public class CountAllAnimalsUseCase
         _animals = animals;
     }
 
-    public async Task<int> Invoke()
+    public async Task<int> Invoke(GetAllAnimalsFilters filters)
     {
-        return await _animals.CountAll();
+        return await _animals.CountAll(filters);
     }
 }

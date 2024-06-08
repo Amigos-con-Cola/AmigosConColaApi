@@ -56,8 +56,8 @@ public class AnimalController_GetAllAnimals_SpeciesFilterTests : IClassFixture<T
         var dogs = await dogsResponse.Content.ReadFromJsonAsync<PaginatedDataResponse<AnimalResponse>>();
         var cats = await catsResponse.Content.ReadFromJsonAsync<PaginatedDataResponse<AnimalResponse>>();
 
-        dogs?.TotalItems.Should().Be(8);
-        cats?.TotalItems.Should().Be(8);
+        dogs?.TotalItems.Should().Be(4);
+        cats?.TotalItems.Should().Be(4);
 
         dogs?.TotalPages.Should().Be(1);
         cats?.TotalPages.Should().Be(1);

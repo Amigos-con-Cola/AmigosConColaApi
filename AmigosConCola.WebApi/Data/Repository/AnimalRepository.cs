@@ -57,9 +57,16 @@ public class AnimalRepository : IAnimalRepository
         return Task.FromResult(result);
     }
 
-    public async Task<int> CountAll()
+    public async Task<int> CountAll(GetAllAnimalsFilters filters)
     {
-        return await _db.Animals.CountAsync();
+        var query = _db.Animals.AsQueryable();
+
+        if (filters.Species is not null)
+        {
+            query = query.Where(x => x.Species.ToLower() == filters.Species.ToString().ToLower());
+        }
+
+        return await query.CountAsync();
     }
 
     public async Task<ErrorOr<Animal>> GetById(int id)

@@ -67,7 +67,7 @@ public class AnimalController : BaseApiController
             return ValidationErrors(result.Errors);
         }
 
-        var count = await _countAllAnimals.Invoke();
+        var count = await _countAllAnimals.Invoke(filters);
 
         var responseData = result.Value.Select(AnimalResponse.FromDomain);
         var response = new PaginatedDataResponse<AnimalResponse>

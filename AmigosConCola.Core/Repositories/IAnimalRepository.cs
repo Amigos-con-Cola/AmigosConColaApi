@@ -15,14 +15,16 @@ public interface IAnimalRepository
     ///     Get all animals.
     /// </summary>
     /// <param name="parameters">Parameters related to pagination.</param>
+    /// <param name="filters">Filters to apply to the search.</param>
     /// <returns>A list of all animals.</returns>
     public Task<ErrorOr<IEnumerable<Animal>>> GetAll(PaginationParams parameters, GetAllAnimalsFilters filters);
 
     /// <summary>
     ///     Get a count of all animals.
     /// </summary>
+    /// <param name="filters">Filters to apply to the search.</param>
     /// <returns>The total number of animals.</returns>
-    public Task<int> CountAll();
+    public Task<int> CountAll(GetAllAnimalsFilters filters);
 
     /// <summary>
     ///     Get an animal by its id.
