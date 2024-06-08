@@ -36,6 +36,7 @@ public class CreateVacunacionTest
         result.IsError.Should().BeFalse();
         result.Value.Date.Should().Be(expectedVacunacion.Date);
         result.Value.Name.Should().Be(expectedVacunacion.Name);
+        result.Value.ExamenPrevio.Should().Be(expectedVacunacion.ExamenPrevio);
     }
 
     [Fact]
@@ -43,7 +44,7 @@ public class CreateVacunacionTest
     {
         // Arrange
         var mock = new Mock<IVacunacionRepository>();
-        var createVacunacionParameters = CreateVacunacionParamsFake.Get(name: "");
+        var createVacunacionParameters = CreateVacunacionParamsFake.Get("");
         var vacunaciones = mock.Object;
         var createVacunacion = new CreateVacunacionUseCase(vacunaciones);
 

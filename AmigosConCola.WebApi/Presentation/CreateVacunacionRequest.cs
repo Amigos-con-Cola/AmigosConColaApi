@@ -9,4 +9,7 @@ public class CreateVacunacionRequest
 
     [JsonPropertyName("date")]
     public DateOnly Date { get; set; }
+
+    [JsonPropertyName("examen_previo")]
+    public string? ExamenPrevio { get; set; }
 }

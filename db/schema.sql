@@ -15,10 +15,11 @@ create table animals
 
 create table vacunaciones
 (
-    id        serial primary key,
-    id_animal integer not null,
-    name      text    not null,
-    date      date    not null,
+    id            serial primary key,
+    id_animal     integer not null,
+    name          text    not null,
+    date          date    not null,
+    examen_previo text,
 
     foreign key (id_animal) references animals (id)
 );

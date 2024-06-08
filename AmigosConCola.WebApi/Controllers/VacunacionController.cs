@@ -44,7 +44,8 @@ public class VacunacionController : BaseApiController
         {
             IdAnimal = animalId,
             Name = request.Name,
-            Date = request.Date
+            Date = request.Date,
+            ExamenPrevio = request.ExamenPrevio
         };
 
         var result = await _createVacunacion.Invoke(parameters);

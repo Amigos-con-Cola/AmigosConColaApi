@@ -16,7 +16,8 @@ public class CreateVacunacionParamsFake
         {
             IdAnimal = random.Number(),
             Date = date.FutureDateOnly(),
-            Name = name ?? random.String2(10)
+            Name = name ?? random.String2(10),
+            ExamenPrevio = random.String2(10)
         };
     }
 }

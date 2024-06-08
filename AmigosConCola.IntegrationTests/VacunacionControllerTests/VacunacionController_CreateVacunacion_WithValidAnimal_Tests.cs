@@ -43,5 +43,6 @@ public class
         vacunacion?.IdAnimal.Should().Be(animalId);
         vacunacion?.Name.Should().Be(request.Name);
         vacunacion?.Date.Should().Be(request.Date);
+        vacunacion?.ExamenPrevio.Should().Be(request.ExamenPrevio);
     }
 }

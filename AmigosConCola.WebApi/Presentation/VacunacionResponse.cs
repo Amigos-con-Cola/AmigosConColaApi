@@ -17,6 +17,9 @@ public class VacunacionResponse
     [JsonPropertyName("date")]
     public DateOnly Date { get; set; }
 
+    [JsonPropertyName("examen_previo")]
+    public string? ExamenPrevio { get; set; }
+
     public static VacunacionResponse FromDomain(Vacunacion vacunacion)
     {
         return new VacunacionResponse
@@ -24,7 +27,8 @@ public class VacunacionResponse
             Id = vacunacion.Id ?? 0,
             IdAnimal = vacunacion.IdAnimal,
             Name = vacunacion.Name,
-            Date = vacunacion.Date
+            Date = vacunacion.Date,
+            ExamenPrevio = vacunacion.ExamenPrevio
         };
     }
 }

@@ -29,7 +29,8 @@ public class VacunacionRepository : IVacunacionRepository
         {
             IdAnimal = parameters.IdAnimal,
             Name = parameters.Name,
-            Date = parameters.Date
+            Date = parameters.Date,
+            ExamenPrevio = parameters.ExamenPrevio
         };
 
         var result = await _db.Vacunaciones.AddAsync(dto);

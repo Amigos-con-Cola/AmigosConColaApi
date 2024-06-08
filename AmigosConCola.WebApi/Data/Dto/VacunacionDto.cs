@@ -18,6 +18,9 @@ public class VacunacionDto
     [Column("date")]
     public DateOnly Date { get; set; }
 
+    [Column("examen_previo")]
+    public string? ExamenPrevio { get; set; }
+
     public AnimalDto Animal { get; set; } = null!;
 
     public Vacunacion ToDomain()
@@ -27,7 +30,8 @@ public class VacunacionDto
             Id = Id,
             IdAnimal = IdAnimal,
             Name = Name,
-            Date = Date
+            Date = Date,
+            ExamenPrevio = ExamenPrevio
         };
     }
 }
