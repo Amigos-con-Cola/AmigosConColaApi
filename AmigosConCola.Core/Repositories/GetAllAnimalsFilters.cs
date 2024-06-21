@@ -5,4 +5,6 @@ namespace AmigosConCola.Core.Repositories;
 public class GetAllAnimalsFilters
 {
     public AnimalSpecies? Species { get; set; }
+
+    public string? Name { get; set; }
 }

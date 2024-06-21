@@ -38,7 +38,9 @@ public class AnimalController : BaseApiController
         [FromQuery]
         int? perPage,
         [FromQuery]
-        string? species)
+        string? species,
+        [FromQuery]
+        string? name)
     {
         GetAllAnimalsFilters filters = new();
 
@@ -53,6 +55,8 @@ public class AnimalController : BaseApiController
                 return Problem(statusCode: 400, detail: $"Invalid animal species: {species}");
             }
         }
+
+        filters.Name = name;
 
         var paginationParams = new PaginationParams
         {

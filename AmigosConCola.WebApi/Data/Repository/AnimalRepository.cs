@@ -46,6 +46,11 @@ public class AnimalRepository : IAnimalRepository
             query = query.Where(x => x.Species.ToLower() == filters.Species.ToString()!.ToLower());
         }
 
+        if (filters.Name is not null)
+        {
+            query = query.Where(x => x.Name.ToLower() == filters.Name.ToLower());
+        }
+
         var result = query
             .OrderBy(x => x.Id)
             .Skip((parameters.Page - 1) * parameters.PerPage)
