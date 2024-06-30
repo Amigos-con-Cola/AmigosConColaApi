@@ -27,7 +27,8 @@ public class AnimalRepository : IAnimalRepository
             Species = parameters.Species.ToString(),
             Weight = parameters.Weight,
             Story = parameters.Story,
-            Code = parameters.Code, Location = parameters.Location
+            Code = parameters.Code,
+            Location = parameters.Location
         };
 
         var result = await _db.Animals.AddAsync(dto);
@@ -68,7 +69,7 @@ public class AnimalRepository : IAnimalRepository
 
         if (filters.Species is not null)
         {
-            query = query.Where(x => x.Species.ToLower() == filters.Species.ToString().ToLower());
+            query = query.Where(x => x.Species.ToLower() == filters.Species.ToString()!.ToLower());
         }
 
         return await query.CountAsync();
