@@ -16,15 +16,18 @@ public class AnimalController : BaseApiController
     private readonly GetAllAnimalsUseCase _getAllAnimals;
     private readonly GetAnimalByIdUseCase _getAnimalById;
     private readonly ILogger<AnimalController> _logger;
+    private readonly IWebHostEnvironment _environment;
 
     public AnimalController(
         ILogger<AnimalController> logger,
+        IWebHostEnvironment environment,
         CreateAnimalUseCase createAnimal,
         GetAllAnimalsUseCase getAllAnimals,
         CountAllAnimalsUseCase countAllAnimals,
         GetAnimalByIdUseCase getAnimalById)
     {
         _logger = logger;
+        _environment = environment;
         _createAnimal = createAnimal;
         _getAllAnimals = getAllAnimals;
         _getAnimalById = getAnimalById;
@@ -105,7 +108,7 @@ public class AnimalController : BaseApiController
 
     [HttpPost]
     public async Task<IActionResult> Store(
-        [FromBody]
+        [FromForm]
         CreateAnimalRequest request)
     {
         AnimalSpecies species;
@@ -117,13 +120,28 @@ public class AnimalController : BaseApiController
         if (!Enum.TryParse(request.Gender, true, out gender))
             return Problem("Invalid gender", statusCode: 400);
 
+        // NOTE: For this to work there needs to exist an Images directory at the root of the web api project.
+        // TODO: Automate the creation of this directory.
+
+        string? imageUrl = null;
+
+        if (request.Image is not null)
+        {
+            // TODO: We may want to ensure these filenames are unique.
+            var filePath = Path.Combine(_environment.ContentRootPath, "Images", request.Image.FileName);
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await request.Image.CopyToAsync(stream);
+            _logger.LogInformation($"Stored image to path: {filePath}");
+            imageUrl = $"{Request.Scheme}://{Request.Host}/images/{request.Image.FileName}";
+        }
+
         var result = await _createAnimal.Invoke(new CreateAnimalParams
         {
             Name = request.Name,
             Age = request.Age,
             Gender = gender,
             Species = species,
-            ImageUrl = request.ImageUrl,
+            ImageUrl = imageUrl,
             Location = request.Location,
             Code = request.Code,
             Story = request.Story,

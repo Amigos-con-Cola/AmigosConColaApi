@@ -17,7 +17,7 @@ public class CreateAnimalRequestFake
             Name = name.FirstName(),
             Age = random.Number(1, 20),
             Gender = random.ArrayElement(new[] { "Male", "Female" }),
-            ImageUrl = lorem.Word(),
+            Image = null,
             Species = random.ArrayElement(new[] { "Dog", "Cat" }),
             Story = lorem.Paragraph(),
             Location = lorem.Word(),

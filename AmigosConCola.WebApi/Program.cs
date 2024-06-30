@@ -4,6 +4,7 @@ using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Data.Repository;
 using AmigosConCola.WebApi.Presentation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,8 @@ builder.Services.AddControllers()
         x.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
     });
 
+builder.Services.AddDirectoryBrowser();
+
 
 var app = builder.Build();
 
@@ -56,6 +59,21 @@ app.UseCors(x =>
         .AllowAnyOrigin()
         .AllowAnyHeader()
         .AllowAnyMethod();
+});
+
+var fileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Images"));
+var staticRequestPath = "/images";
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = fileProvider,
+    RequestPath = staticRequestPath,
+});
+
+app.UseDirectoryBrowser(new DirectoryBrowserOptions
+{
+    FileProvider = fileProvider,
+    RequestPath = staticRequestPath,
 });
 
 app.MapControllers();
