@@ -11,6 +11,7 @@ public class CreateDesparasitacionTests
     [Fact]
     public async void Test_creating_a_desparasitacion_with_correct_data_returns_the_desparasitacion()
     {
+        // Arrange
         var mock = new Mock<IDesparasitacionRepository>();
         var date = DateOnly.FromDateTime(DateTime.Now);
         var createDesparasitacionParams = new CreateDesparasitacionParams(2, "Interno", date, "Actyvil", 5, "Pastilla");
@@ -38,5 +39,21 @@ public class CreateDesparasitacionTests
         result.Value.Formato.Should().Be("Pastilla");
     }
 
-    // TODO: Test for the error cases.
+    [Fact]
+    public async void Test_creating_a_desparasitacion_with_an_invalid_tipo_returns_an_error()
+    {
+        // Arrange
+        var mock = new Mock<IDesparasitacionRepository>();
+        var date = DateOnly.FromDateTime(DateTime.Now);
+        var createDesparasitacionParams = new CreateDesparasitacionParams(2, "Not valid", date, "Actyvil", 5, "Pastilla");
+        var desparasitaciones = mock.Object;
+        var createDesparasitacion = new CreateDesparasitacionUseCase(desparasitaciones);
+
+        // Act
+        var result = await createDesparasitacion.Invoke(createDesparasitacionParams);
+
+        // Assert
+        result.IsError.Should().BeTrue();
+        result.FirstError.Code.Should().Be("Tipo");
+    }
 }
