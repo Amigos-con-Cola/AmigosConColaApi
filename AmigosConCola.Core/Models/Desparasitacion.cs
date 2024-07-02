@@ -12,7 +12,7 @@ public class Desparasitacion
 
     public string Producto { get; set; } = null!;
 
-    public int Peso { get; set; }
+    public decimal Peso { get; set; }
 
     public string Formato { get; set; } = null!;
 }

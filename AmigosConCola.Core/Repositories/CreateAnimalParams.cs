@@ -10,7 +10,7 @@ public sealed class CreateAnimalParams
     public string? ImageUrl { get; set; }
     public AnimalSpecies Species { get; set; }
     public string? Story { get; set; }
-    public string? Location { get; set; }
+    public string Location { get; set; } = null!;
     public decimal Weight { get; set; }
     public string? Code { get; set; }
 }

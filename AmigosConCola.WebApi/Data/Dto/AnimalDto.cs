@@ -42,6 +42,8 @@ public class AnimalDto
 
     public ICollection<VacunacionDto> Vacunaciones { get; } = null!;
 
+    public ICollection<DesparasitacionDto> Desparasitaciones { get; } = null!;
+
     public ErrorOr<Animal> ToDomain()
     {
         AnimalGender gender;

@@ -23,3 +23,16 @@ create table vacunaciones
 
     foreign key (id_animal) references animals (id)
 );
+
+create table desparasitaciones 
+(
+    id          serial primary key,
+    id_animal   integer not null,
+    tipo        text    not null,
+    fecha       date    not null,
+    producto    text    not null,
+    peso        decimal not null,
+    formato     text    not null,
+
+    foreign key (id_animal) references animals (id)
+);

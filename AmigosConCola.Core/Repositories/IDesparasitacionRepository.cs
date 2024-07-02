@@ -8,7 +8,7 @@ public record CreateDesparasitacionParams(
     string Tipo,
     DateOnly Fecha,
     string Producto,
-    int Peso,
+    decimal Peso,
     string Formato);
 
 
