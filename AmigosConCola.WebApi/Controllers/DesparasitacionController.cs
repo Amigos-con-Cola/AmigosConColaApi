@@ -11,13 +11,33 @@ public sealed class DesparasitacionController : BaseApiController
 {
     private readonly ILogger<DesparasitacionController> _logger;
     private readonly CreateDesparasitacionUseCase _createDesparasitacion;
+    private readonly FindAllDesparasitacionesUseCase _findAllDesparasitaciones;
 
     public DesparasitacionController(
             ILogger<DesparasitacionController> logger,
-            CreateDesparasitacionUseCase createDesparasitacion)
+            CreateDesparasitacionUseCase createDesparasitacion,
+            FindAllDesparasitacionesUseCase findAllDesparasitaciones)
     {
         _logger = logger;
         _createDesparasitacion = createDesparasitacion;
+        _findAllDesparasitaciones = findAllDesparasitaciones;
+    }
+
+    [HttpGet("{animalId:int}/desparasitaciones")]
+    public async Task<IActionResult> Index(int animalId)
+    {
+        var result = await _findAllDesparasitaciones.Invoke(animalId);
+        var response = result.Select(x => new DesparasitacionResponse
+        {
+            Id = x.Id,
+            IdAnimal = x.IdAnimal,
+            Tipo = x.Tipo,
+            Fecha = x.Fecha,
+            Producto = x.Producto,
+            Peso = x.Peso,
+            Formato = x.Formato
+        });
+        return Ok(response);
     }
 
     [HttpPost("{animalId:int}/desparasitaciones")]

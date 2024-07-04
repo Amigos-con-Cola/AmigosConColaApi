@@ -35,6 +35,7 @@ builder.Services.AddScoped<FindAllVacunacionesUseCase>();
 // Desparasitaciones
 builder.Services.AddScoped<IDesparasitacionRepository, DesparasitacionRepository>();
 builder.Services.AddScoped<CreateDesparasitacionUseCase>();
+builder.Services.AddScoped<FindAllDesparasitacionesUseCase>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>

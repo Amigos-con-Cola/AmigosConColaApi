@@ -46,4 +46,21 @@ public sealed class DesparasitacionRepository : IDesparasitacionRepository
             Formato = result.Entity.Formato,
         };
     }
+
+    public Task<IEnumerable<Desparasitacion>> FindAll(int animalId)
+    {
+        return Task.FromResult(_db.Desparasitaciones
+            .Where(x => x.IdAnimal == animalId)
+            .Select(x => new Desparasitacion
+            {
+                Id = (int)x.Id!,
+                IdAnimal = x.IdAnimal,
+                Tipo = x.Tipo,
+                Fecha = x.Fecha,
+                Producto = x.Producto,
+                Peso = x.Peso,
+                Formato = x.Formato,
+            })
+            .AsEnumerable());
+    }
 }

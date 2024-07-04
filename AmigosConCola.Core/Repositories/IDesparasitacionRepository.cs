@@ -15,6 +15,11 @@ public record CreateDesparasitacionParams(
 public interface IDesparasitacionRepository
 {
     /// <summary>
+    /// List all desparasitaciones.
+    /// </summary>
+    Task<IEnumerable<Desparasitacion>> FindAll(int animalId);
+
+    /// <summary>
     /// Create a new desparasitacion.
     /// </summary>
     Task<ErrorOr<Desparasitacion>> Create(CreateDesparasitacionParams parameters);
