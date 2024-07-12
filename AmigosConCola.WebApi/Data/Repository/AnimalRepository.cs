@@ -49,7 +49,7 @@ public class AnimalRepository : IAnimalRepository
 
         if (filters.Name is not null)
         {
-            query = query.Where(x => x.Name.ToLower() == filters.Name.ToLower());
+            query = query.Where(x => x.Name.ToLower().Contains(filters.Name.ToLower()));
         }
 
         var result = query

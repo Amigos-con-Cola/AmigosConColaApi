@@ -19,5 +19,6 @@
     &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests.AnimalControllerGetAllAnimalsNonEmptyTests.Test_getting_all_animals_returns_a_list_of_animals&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests.AnimalControllerNameFilterTests.Test_getting_all_animals_using_the_name_filter_works&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::39EBC586-B605-4EF7-AE0D-56F28AF1D4D5::net8.0::AmigosConCola.IntegrationTests.AnimalControllerTests.AnimalControllerNameFilterTests.Test_getting_all_animals_using_the_name_filter_works_for_an_exact_match&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::E823451B-103D-4DA2-A1E5-604BA1C49A9E::net8.0::AmigosConCola.UnitTests.CreateAseoTests.Test_CreatingAnAseo_WithAnEmptyTipo_ReturnsAnError&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

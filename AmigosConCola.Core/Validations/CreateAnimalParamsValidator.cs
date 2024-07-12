@@ -8,6 +8,6 @@ public sealed class CreateAnimalParamsValidator : AbstractValidator<CreateAnimal
     public CreateAnimalParamsValidator()
     {
         RuleFor(x => x.Name).NotEmpty();
-        RuleFor(x => x.Age).GreaterThan(0);
+        RuleFor(x => x.Age).GreaterThan(0).LessThan(20);
     }
 }

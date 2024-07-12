@@ -37,6 +37,10 @@ builder.Services.AddScoped<IDesparasitacionRepository, DesparasitacionRepository
 builder.Services.AddScoped<CreateDesparasitacionUseCase>();
 builder.Services.AddScoped<FindAllDesparasitacionesUseCase>();
 
+// Aseos
+builder.Services.AddScoped<IAseosRepository, AseoRepository>();
+builder.Services.AddScoped<CreateAseoUseCase>();
+
 builder.Services.AddControllers()
     .AddJsonOptions(x =>
     {
@@ -72,13 +76,13 @@ var staticRequestPath = "/images";
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = fileProvider,
-    RequestPath = staticRequestPath,
+    RequestPath = staticRequestPath
 });
 
 app.UseDirectoryBrowser(new DirectoryBrowserOptions
 {
     FileProvider = fileProvider,
-    RequestPath = staticRequestPath,
+    RequestPath = staticRequestPath
 });
 
 app.MapControllers();
