@@ -19,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(x =>
 });
 
 builder.Services.AddCors();
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Animales
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();

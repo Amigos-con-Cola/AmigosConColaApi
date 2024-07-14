@@ -2,6 +2,7 @@ using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Data.Dto;
+using AutoMapper;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -12,13 +13,16 @@ public sealed class AseoRepository : IAseosRepository
 {
     private readonly ApplicationDbContext _db;
     private readonly ILogger<AseoRepository> _logger;
+    private readonly IMapper _mapper;
 
     public AseoRepository(
         ApplicationDbContext db,
-        ILogger<AseoRepository> logger)
+        ILogger<AseoRepository> logger,
+        IMapper mapper)
     {
         _db = db;
         _logger = logger;
+        _mapper = mapper;
     }
 
     public async Task<ErrorOr<Aseo>> Create(CreateAseoParams parameters)
@@ -32,25 +36,13 @@ public sealed class AseoRepository : IAseosRepository
             return Error.Validation(description: "The provided animal id is invalid");
         }
 
-        var dto = new AseoDto
-        {
-            IdAnimal = parameters.IdAnimal,
-            Tipo = parameters.Tipo,
-            Fecha = parameters.Fecha
-        };
+        var dto = _mapper.Map<AseoDto>(parameters);
 
         try
         {
             var result = await _db.Aseos.AddAsync(dto);
             await _db.SaveChangesAsync();
-
-            return new Aseo
-            {
-                Id = result.Entity.Id,
-                IdAnimal = result.Entity.IdAnimal,
-                Tipo = result.Entity.Tipo,
-                Fecha = result.Entity.Fecha
-            };
+            return _mapper.Map<Aseo>(result.Entity);
         }
         catch (PostgresException ex)
         {

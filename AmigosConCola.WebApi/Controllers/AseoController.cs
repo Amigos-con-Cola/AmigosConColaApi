@@ -1,6 +1,7 @@
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
 using AmigosConCola.WebApi.Presentation;
+using AutoMapper;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,12 @@ namespace AmigosConCola.WebApi.Controllers;
 public class AseoController : BaseApiController
 {
     private readonly CreateAseoUseCase _createAseo;
+    private readonly IMapper _mapper;
 
-    public AseoController(CreateAseoUseCase createAseo)
+    public AseoController(CreateAseoUseCase createAseo, IMapper mapper)
     {
         _createAseo = createAseo;
+        _mapper = mapper;
     }
 
     [HttpPost("{idAnimal:int}/aseos")]
@@ -44,13 +47,7 @@ public class AseoController : BaseApiController
                 detail: result.FirstError.Description);
         }
 
-        var response = new AseoResponse
-        {
-            Id = result.Value.Id,
-            IdAnimal = result.Value.IdAnimal,
-            Tipo = result.Value.Tipo,
-            Fecha = result.Value.Fecha
-        };
+        var response = _mapper.Map<AseoResponse>(result.Value);
 
         return Created(
             $"/api/animales/{idAnimal}/aseos/{result.Value.Id}",
