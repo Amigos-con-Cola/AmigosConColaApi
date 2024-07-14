@@ -4,11 +4,11 @@ using AmigosConCola.WebApi.Data.Dto;
 using AmigosConCola.WebApi.Presentation;
 using AutoMapper;
 
-namespace AmigosConCola.WebApi.Config;
+namespace AmigosConCola.WebApi.Config.AutoMapper;
 
-public class AutoMapperProfile : Profile
+public class AutoMapperAseosProfile : Profile
 {
-    public AutoMapperProfile()
+    public AutoMapperAseosProfile()
     {
         // Aseos
         CreateMap<Aseo, AseoResponse>();
