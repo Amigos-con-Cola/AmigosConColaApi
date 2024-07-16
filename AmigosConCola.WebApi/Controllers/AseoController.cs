@@ -12,12 +12,25 @@ namespace AmigosConCola.WebApi.Controllers;
 public class AseoController : BaseApiController
 {
     private readonly CreateAseoUseCase _createAseo;
+    private readonly FindAllAseosUseCase _findAllAseos;
     private readonly IMapper _mapper;
 
-    public AseoController(CreateAseoUseCase createAseo, IMapper mapper)
+    public AseoController(
+        CreateAseoUseCase createAseo,
+        IMapper mapper,
+        FindAllAseosUseCase findAllAseos)
     {
         _createAseo = createAseo;
         _mapper = mapper;
+        _findAllAseos = findAllAseos;
+    }
+
+    [HttpGet("{idAnimal:int}/aseos")]
+    public async Task<IActionResult> Index(int idAnimal)
+    {
+        var result = await _findAllAseos.Invoke(idAnimal);
+        var response = result.Select(x => _mapper.Map<AseoResponse>(x));
+        return Ok(response);
     }
 
     [HttpPost("{idAnimal:int}/aseos")]
