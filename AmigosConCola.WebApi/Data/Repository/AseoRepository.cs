@@ -50,4 +50,12 @@ public sealed class AseoRepository : IAseosRepository
             return Error.Unexpected(description: "There was an error while trying to create the aseo");
         }
     }
+
+    public async Task<IEnumerable<Aseo>> FindAll(int idAnimal)
+    {
+        return await _db.Aseos
+            .Where(x => x.IdAnimal == idAnimal)
+            .Select(x => _mapper.Map<Aseo>(x))
+            .ToListAsync();
+    }
 }

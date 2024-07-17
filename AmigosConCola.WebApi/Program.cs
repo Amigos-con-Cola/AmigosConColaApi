@@ -41,6 +41,7 @@ builder.Services.AddScoped<FindAllDesparasitacionesUseCase>();
 // Aseos
 builder.Services.AddScoped<IAseosRepository, AseoRepository>();
 builder.Services.AddScoped<CreateAseoUseCase>();
+builder.Services.AddScoped<FindAllAseosUseCase>();
 
 // Pesos
 builder.Services.AddScoped<IPesosRepository, PesoRepository>();
