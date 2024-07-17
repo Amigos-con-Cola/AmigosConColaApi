@@ -49,10 +49,10 @@ create table aseos
 
 create table pesos
 (
-  id serial PRIMARY KEY,
-  id_animal integer not null,
-  peso_actual decimal not null,
-  fecha date not null,
+    id          serial primary key,
+    id_animal   integer not null,
+    peso_actual decimal not null,
+    fecha       date not null,
 
-  FOREIGN KEY(id_animal) REFERENCES animals (id)
+    foreign key (id_animal) references animals (id)
 );

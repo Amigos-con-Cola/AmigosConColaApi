@@ -11,36 +11,36 @@ services:
     volumes:
       - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
 
-  keycloak_db:
-    image: postgres
-    restart: always
-    ports:
-      - "5433:5432"
-    environment:
-      POSTGRES_PASSWORD: amigosconcola
-      POSTGRES_DB: keycloak
+  # keycloak_db:
+  #   image: postgres
+  #   restart: always
+  #   ports:
+  #     - "5433:5432"
+  #   environment:
+  #     POSTGRES_PASSWORD: amigosconcola
+  #     POSTGRES_DB: keycloak
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:25.0
-    environment:
-      KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: 7080
-      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_HEALTH_ENABLED: "true"
-      KC_LOG_LEVEL: info
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://keycloak_db:5432/keycloak
-      KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: amigosconcola
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:7080/health/ready" ]
-      interval: 15s
-      timeout: 2s
-      retries: 15
-    command: [ "start-dev", "--http-port", "7080", "--https-port", "7443" ]
-    ports:
-      - "7080:7080"
-    depends_on:
-      - keycloak_db
+  # keycloak:
+  #   image: quay.io/keycloak/keycloak:25.0
+  #   environment:
+  #     KC_HOSTNAME: localhost
+  #     KC_HOSTNAME_PORT: 7080
+  #     KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+  #     KEYCLOAK_ADMIN: admin
+  #     KEYCLOAK_ADMIN_PASSWORD: admin
+  #     KC_HEALTH_ENABLED: "true"
+  #     KC_LOG_LEVEL: info
+  #     KC_DB: postgres
+  #     KC_DB_URL: jdbc:postgresql://keycloak_db:5432/keycloak
+  #     KC_DB_USERNAME: postgres
+  #     KC_DB_PASSWORD: amigosconcola
+  #   healthcheck:
+  #     test: [ "CMD", "curl", "-f", "http://localhost:7080/health/ready" ]
+  #     interval: 15s
+  #     timeout: 2s
+  #     retries: 15
+  #   command: [ "start-dev", "--http-port", "7080", "--https-port", "7443" ]
+  #   ports:
+  #     - "7080:7080"
+  #   depends_on:
+  #     - keycloak_db
