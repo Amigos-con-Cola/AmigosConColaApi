@@ -45,6 +45,8 @@ public class AnimalDto
     public ICollection<DesparasitacionDto> Desparasitaciones { get; } = null!;
 
     public ICollection<AseoDto> Aseos { get; } = null!;
+    
+    public ICollection<PesoDto> Pesos { get; } = null!;
 
     public ErrorOr<Animal> ToDomain()
     {
