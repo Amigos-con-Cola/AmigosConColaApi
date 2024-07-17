@@ -53,7 +53,7 @@ public class AnimalRepository : IAnimalRepository
         }
 
         var result = query
-            .OrderBy(x => x.Id)
+            .OrderByDescending(x => x.Id)
             .Skip((parameters.Page - 1) * parameters.PerPage)
             .Take(parameters.PerPage)
             .Select(x => x.ToDomain().Value)

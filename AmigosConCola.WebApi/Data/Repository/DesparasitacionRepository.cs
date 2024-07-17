@@ -51,6 +51,7 @@ public sealed class DesparasitacionRepository : IDesparasitacionRepository
     {
         return Task.FromResult(_db.Desparasitaciones
             .Where(x => x.IdAnimal == animalId)
+            .OrderByDescending(x => x.Id)
             .Select(x => new Desparasitacion
             {
                 Id = (int)x.Id!,

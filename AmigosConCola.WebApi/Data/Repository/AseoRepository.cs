@@ -55,6 +55,7 @@ public sealed class AseoRepository : IAseosRepository
     {
         return await _db.Aseos
             .Where(x => x.IdAnimal == idAnimal)
+            .OrderByDescending(x => x.Id)
             .Select(x => _mapper.Map<Aseo>(x))
             .ToListAsync();
     }

@@ -54,8 +54,8 @@ public class VacunacionRepository : IVacunacionRepository
         }
 
         return animal.Vacunaciones
+            .OrderByDescending(x => x.Id)
             .Select(x => x.ToDomain())
             .ToErrorOr();
     }
 }
-
