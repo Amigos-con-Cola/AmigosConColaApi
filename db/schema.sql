@@ -46,3 +46,13 @@ create table aseos
 
     foreign key (id_animal) references animals (id)
 );
+
+create table pesos
+(
+  id serial PRIMARY KEY,
+  id_animal integer not null,
+  peso_actual decimal not null,
+  fecha date not null,
+
+  FOREIGN KEY(id_animal) REFERENCES animals (id)
+);
