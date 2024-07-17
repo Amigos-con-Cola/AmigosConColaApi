@@ -42,6 +42,10 @@ builder.Services.AddScoped<FindAllDesparasitacionesUseCase>();
 builder.Services.AddScoped<IAseosRepository, AseoRepository>();
 builder.Services.AddScoped<CreateAseoUseCase>();
 
+// Pesos
+builder.Services.AddScoped<IPesosRepository, PesoRepository>();
+builder.Services.AddScoped<CreatePesoUseCase>();
+
 builder.Services.AddControllers()
     .AddJsonOptions(x =>
     {
