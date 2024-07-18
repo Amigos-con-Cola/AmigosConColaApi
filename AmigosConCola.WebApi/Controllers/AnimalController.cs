@@ -13,10 +13,11 @@ public class AnimalController : BaseApiController
 {
     private readonly CountAllAnimalsUseCase _countAllAnimals;
     private readonly CreateAnimalUseCase _createAnimal;
+    private readonly DeleteAnimalUseCase _deleteAnimal;
+    private readonly IWebHostEnvironment _environment;
     private readonly GetAllAnimalsUseCase _getAllAnimals;
     private readonly GetAnimalByIdUseCase _getAnimalById;
     private readonly ILogger<AnimalController> _logger;
-    private readonly IWebHostEnvironment _environment;
 
     public AnimalController(
         ILogger<AnimalController> logger,
@@ -24,7 +25,8 @@ public class AnimalController : BaseApiController
         CreateAnimalUseCase createAnimal,
         GetAllAnimalsUseCase getAllAnimals,
         CountAllAnimalsUseCase countAllAnimals,
-        GetAnimalByIdUseCase getAnimalById)
+        GetAnimalByIdUseCase getAnimalById,
+        DeleteAnimalUseCase deleteAnimal)
     {
         _logger = logger;
         _environment = environment;
@@ -32,31 +34,24 @@ public class AnimalController : BaseApiController
         _getAllAnimals = getAllAnimals;
         _getAnimalById = getAnimalById;
         _countAllAnimals = countAllAnimals;
+        _deleteAnimal = deleteAnimal;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index(
-        [FromQuery]
-        int? page,
-        [FromQuery]
-        int? perPage,
-        [FromQuery]
-        string? species,
-        [FromQuery]
-        string? name)
+        [FromQuery] int? page,
+        [FromQuery] int? perPage,
+        [FromQuery] string? species,
+        [FromQuery] string? name)
     {
         GetAllAnimalsFilters filters = new();
 
         if (species is not null)
         {
             if (Enum.TryParse(species, out AnimalSpecies speciesFilter))
-            {
                 filters.Species = speciesFilter;
-            }
             else
-            {
                 return Problem(statusCode: 400, detail: $"Invalid animal species: {species}");
-            }
         }
 
         filters.Name = name;
@@ -69,10 +64,7 @@ public class AnimalController : BaseApiController
 
         var result = await _getAllAnimals.Invoke(paginationParams, filters);
 
-        if (result.IsError)
-        {
-            return ValidationErrors(result.Errors);
-        }
+        if (result.IsError) return ValidationErrors(result.Errors);
 
         var count = await _countAllAnimals.Invoke(filters);
 
@@ -96,9 +88,7 @@ public class AnimalController : BaseApiController
         if (result.IsError)
         {
             if (result.Errors.Count == 1 && result.FirstError.Type == ErrorType.NotFound)
-            {
                 return NotFound(result.FirstError.Description);
-            }
 
             return ValidationErrors(result.Errors);
         }
@@ -108,8 +98,7 @@ public class AnimalController : BaseApiController
 
     [HttpPost]
     public async Task<IActionResult> Store(
-        [FromForm]
-        CreateAnimalRequest request)
+        [FromForm] CreateAnimalRequest request)
     {
         AnimalSpecies species;
         AnimalGender gender;
@@ -148,13 +137,26 @@ public class AnimalController : BaseApiController
             Weight = request.Weight
         });
 
-        if (result.IsError)
-        {
-            return ValidationErrors(result.Errors);
-        }
+        if (result.IsError) return ValidationErrors(result.Errors);
 
         return Created(
             "/animals/" + result.Value.Id,
             AnimalResponse.FromDomain(result.Value));
+    }
+
+    [HttpPost("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _deleteAnimal.Invoke(id);
+
+        if (result.IsError)
+        {
+            if (result.Errors.Count == 1 && result.FirstError.Type == ErrorType.NotFound)
+                return NotFound(result.FirstError.Description);
+
+            return ValidationErrors(result.Errors);
+        }
+
+        return Ok(result.Value);
     }
 }

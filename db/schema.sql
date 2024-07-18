@@ -21,7 +21,7 @@ create table vacunaciones
     date          date    not null,
     examen_previo text,
 
-    foreign key (id_animal) references animals (id)
+    foreign key (id_animal) references animals (id) on delete cascade
 );
 
 create table desparasitaciones
@@ -34,7 +34,7 @@ create table desparasitaciones
     peso      decimal not null,
     formato   text    not null,
 
-    foreign key (id_animal) references animals (id)
+    foreign key (id_animal) references animals (id) on delete cascade
 );
 
 create table aseos
@@ -44,7 +44,7 @@ create table aseos
     tipo      text    not null,
     fecha     date    not null,
 
-    foreign key (id_animal) references animals (id)
+    foreign key (id_animal) references animals (id) on delete cascade
 );
 
 create table pesos
@@ -52,7 +52,7 @@ create table pesos
     id          serial primary key,
     id_animal   integer not null,
     peso_actual decimal not null,
-    fecha       date not null,
+    fecha       date    not null,
 
-    foreign key (id_animal) references animals (id)
+    foreign key (id_animal) references animals (id) on delete cascade
 );
