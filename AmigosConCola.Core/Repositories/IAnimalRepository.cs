@@ -32,4 +32,12 @@ public interface IAnimalRepository
     /// <param name="id">The id of the animal</param>
     /// <returns>An animal or an error.</returns>
     public Task<ErrorOr<Animal>> GetById(int id);
+
+
+    /// <summary>
+    ///     Delete an animal by its id.
+    /// </summary>
+    /// <param name="id">The id of the animal</param>
+    /// <returns>A bool or an error.</returns>
+    public Task<ErrorOr<bool>> Delete(int id);
 }

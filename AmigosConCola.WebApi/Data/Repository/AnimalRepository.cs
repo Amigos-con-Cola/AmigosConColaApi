@@ -86,4 +86,26 @@ public class AnimalRepository : IAnimalRepository
 
         return animal.ToDomain();
     }
+
+    public async Task<ErrorOr<bool>> Delete(int id)
+    {
+        var animal = await _db.Animals.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+        if (animal is null)
+        {
+            return Error.NotFound(description: $"There is no animal with the id {id}");
+        }
+
+        _db.Animals.Remove(animal);
+    
+        try
+        {
+            await _db.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return Error.Failure(description: $"An error occurred while deleting the animal: {ex.Message}");
+        }
+    }
 }

@@ -17,6 +17,7 @@ public class AnimalController : BaseApiController
     private readonly GetAnimalByIdUseCase _getAnimalById;
     private readonly ILogger<AnimalController> _logger;
     private readonly IWebHostEnvironment _environment;
+    private readonly DeleteAnimalUseCase _deleteAnimal;
 
     public AnimalController(
         ILogger<AnimalController> logger,
@@ -24,7 +25,8 @@ public class AnimalController : BaseApiController
         CreateAnimalUseCase createAnimal,
         GetAllAnimalsUseCase getAllAnimals,
         CountAllAnimalsUseCase countAllAnimals,
-        GetAnimalByIdUseCase getAnimalById)
+        GetAnimalByIdUseCase getAnimalById,
+        DeleteAnimalUseCase deleteAnimal)
     {
         _logger = logger;
         _environment = environment;
@@ -32,6 +34,7 @@ public class AnimalController : BaseApiController
         _getAllAnimals = getAllAnimals;
         _getAnimalById = getAnimalById;
         _countAllAnimals = countAllAnimals;
+        _deleteAnimal = deleteAnimal;
     }
 
     [HttpGet]
@@ -156,5 +159,24 @@ public class AnimalController : BaseApiController
         return Created(
             "/animals/" + result.Value.Id,
             AnimalResponse.FromDomain(result.Value));
+    }
+    
+    [HttpPost("{id:int}")]
+    
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _deleteAnimal.Invoke(id);
+
+        if (result.IsError)
+        {
+            if (result.Errors.Count == 1 && result.FirstError.Type == ErrorType.NotFound)
+            {
+                return NotFound(result.FirstError.Description);
+            }
+
+            return ValidationErrors(result.Errors);
+        }
+
+        return Ok(result.Value);
     }
 }

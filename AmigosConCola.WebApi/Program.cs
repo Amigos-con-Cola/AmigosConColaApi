@@ -27,6 +27,7 @@ builder.Services.AddScoped<CreateAnimalUseCase>();
 builder.Services.AddScoped<GetAllAnimalsUseCase>();
 builder.Services.AddScoped<GetAnimalByIdUseCase>();
 builder.Services.AddScoped<CountAllAnimalsUseCase>();
+builder.Services.AddScoped<DeleteAnimalUseCase>();
 
 // Vacunaciones
 builder.Services.AddScoped<IVacunacionRepository, VacunacionRepository>();
