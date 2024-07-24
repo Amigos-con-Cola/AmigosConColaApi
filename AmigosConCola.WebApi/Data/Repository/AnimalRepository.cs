@@ -43,14 +43,9 @@ public class AnimalRepository : IAnimalRepository
         var query = _db.Animals.AsQueryable();
 
         if (filters.Species is not null)
-        {
             query = query.Where(x => x.Species.ToLower() == filters.Species.ToString()!.ToLower());
-        }
 
-        if (filters.Name is not null)
-        {
-            query = query.Where(x => x.Name.ToLower().Contains(filters.Name.ToLower()));
-        }
+        if (filters.Name is not null) query = query.Where(x => x.Name.ToLower().Contains(filters.Name.ToLower()));
 
         var result = query
             .OrderByDescending(x => x.Id)
@@ -68,9 +63,7 @@ public class AnimalRepository : IAnimalRepository
         var query = _db.Animals.AsQueryable();
 
         if (filters.Species is not null)
-        {
             query = query.Where(x => x.Species.ToLower() == filters.Species.ToString()!.ToLower());
-        }
 
         return await query.CountAsync();
     }
@@ -79,11 +72,27 @@ public class AnimalRepository : IAnimalRepository
     {
         var animal = await _db.Animals.Where(x => x.Id == id).FirstOrDefaultAsync();
 
-        if (animal is null)
-        {
-            return Error.NotFound(description: $"There is no animal with the id {id}");
-        }
+        if (animal is null) return Error.NotFound(description: $"There is no animal with the id {id}");
 
         return animal.ToDomain();
+    }
+
+    public async Task<ErrorOr<bool>> Delete(int id)
+    {
+        var animal = await _db.Animals.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+        if (animal is null) return Error.NotFound(description: $"There is no animal with the id {id}");
+
+        _db.Animals.Remove(animal);
+
+        try
+        {
+            await _db.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return Error.Failure(description: $"An error occurred while deleting the animal: {ex.Message}");
+        }
     }
 }
