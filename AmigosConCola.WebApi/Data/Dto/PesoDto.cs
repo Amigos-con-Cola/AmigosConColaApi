@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AmigosConCola.WebApi.Data.Dto;
-
+[Table("pesos")]
 public sealed class PesoDto
 {
     [Column ("id")]

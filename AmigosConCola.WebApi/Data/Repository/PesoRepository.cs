@@ -9,12 +9,12 @@ using Npgsql;
 
 namespace AmigosConCola.WebApi.Data.Repository;
 
-public class PesoRepository: IPesosRepository
+public sealed class PesoRepository : IPesosRepository
 {
     private readonly ApplicationDbContext _db;
     private readonly ILogger<PesoRepository> _logger;
     private readonly IMapper _mapper;
-    
+
     public PesoRepository(
         ApplicationDbContext db,
         ILogger<PesoRepository> logger,
@@ -24,7 +24,7 @@ public class PesoRepository: IPesosRepository
         _logger = logger;
         _mapper = mapper;
     }
-    
+
     public async Task<ErrorOr<Peso>> Create(CreatePesoParams parameters)
     {
         var animal = await _db.Animals
@@ -32,9 +32,9 @@ public class PesoRepository: IPesosRepository
             .FirstOrDefaultAsync();
         if (animal is null)
         {
-            return Error.Validation(description:"The provided animal id is invalid");
+            return Error.Validation(description: "The provided animal id is invalid");
         }
-        
+
         var dto = _mapper.Map<PesoDto>(parameters);
 
         try
@@ -48,5 +48,14 @@ public class PesoRepository: IPesosRepository
             _logger.LogError("There was an error while trying to create the peso: {}", ex);
             return Error.Unexpected(description: "There was an error while trying to create the peso");
         }
+    }
+
+    public async Task<IEnumerable<Peso>> FindAll(int idAnimal)
+    {
+        return await _db.Pesos
+            .Where(x => x.IdAnimal == idAnimal)
+            .OrderByDescending(x => x.Id)
+            .Select(x => _mapper.Map<Peso>(x))
+            .ToListAsync();
     }
 }
