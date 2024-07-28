@@ -47,6 +47,7 @@ builder.Services.AddScoped<FindAllAseosUseCase>();
 // Pesos
 builder.Services.AddScoped<IPesosRepository, PesoRepository>();
 builder.Services.AddScoped<CreatePesoUseCase>();
+builder.Services.AddScoped<FindAllPesosUseCase>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>

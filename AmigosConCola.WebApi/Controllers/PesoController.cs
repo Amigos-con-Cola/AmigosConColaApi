@@ -9,17 +9,33 @@ namespace AmigosConCola.WebApi.Controllers;
 
 [ApiController]
 [Route("/api/animales")]
-public class PesoController: BaseApiController
+public class PesoController : BaseApiController
 {
+    private readonly ILogger<PesoController> _logger;
     private readonly CreatePesoUseCase _createPeso;
+    private readonly FindAllPesosUseCase _findAllPesos;
     private readonly IMapper _mapper;
-    
-    public PesoController(CreatePesoUseCase createPeso, IMapper mapper)
+
+    public PesoController(
+        ILogger<PesoController> logger,
+        CreatePesoUseCase createPeso,
+        FindAllPesosUseCase findAllPesos,
+        IMapper mapper)
     {
+        _logger = logger;
         _createPeso = createPeso;
+        _findAllPesos = findAllPesos;
         _mapper = mapper;
     }
-    
+
+    [HttpGet("{idAnimal:int}/pesos")]
+    public async Task<IActionResult> Index(int idAnimal)
+    {
+        var result = await _findAllPesos.Invoke(idAnimal);
+        var response = result.Select(x => _mapper.Map<PesoResponse>(x));
+        return Ok(response);
+    }
+
     [HttpPost("{idAnimal:int}/pesos")]
     public async Task<IActionResult> Store(
         int idAnimal,
@@ -52,5 +68,5 @@ public class PesoController: BaseApiController
             $"/api/animales/{idAnimal}/pesos/{result.Value.Id}",
             response);
     }
-    
+
 }
