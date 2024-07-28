@@ -161,7 +161,7 @@ public class AnimalController : BaseApiController
             AnimalResponse.FromDomain(result.Value));
     }
     
-    [HttpPost("{id:int}")]
+    [HttpDelete("{id:int}")]
     
     public async Task<IActionResult> Delete(int id)
     {
