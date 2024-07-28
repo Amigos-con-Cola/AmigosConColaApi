@@ -30,10 +30,9 @@ public sealed class PesoRepository : IPesosRepository
         var animal = await _db.Animals
             .Where(x => x.Id == parameters.IdAnimal)
             .FirstOrDefaultAsync();
+
         if (animal is null)
-        {
-            return Error.Validation(description: "The provided animal id is invalid");
-        }
+            return Error.NotFound(description: "The provided animal id is invalid");
 
         var dto = _mapper.Map<PesoDto>(parameters);
 

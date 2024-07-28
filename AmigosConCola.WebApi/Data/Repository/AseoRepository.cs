@@ -32,9 +32,7 @@ public sealed class AseoRepository : IAseosRepository
             .FirstOrDefaultAsync();
 
         if (animal is null)
-        {
-            return Error.Validation(description: "The provided animal id is invalid");
-        }
+            return Error.NotFound(description: "The provided animal id is invalid");
 
         var dto = _mapper.Map<AseoDto>(parameters);
 

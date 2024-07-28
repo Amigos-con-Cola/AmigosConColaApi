@@ -1,7 +1,5 @@
-using AmigosConCola.Core.Repositories;
-using AmigosConCola.Core.UseCases;
 using AmigosConCola.WebApi.Data.Database;
-using AmigosConCola.WebApi.Data.Repository;
+using AmigosConCola.WebApi.Extensions;
 using AmigosConCola.WebApi.Presentation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -21,33 +19,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(x =>
 builder.Services.AddCors();
 builder.Services.AddAutoMapper(typeof(Program));
 
-// Animales
-builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
-builder.Services.AddScoped<CreateAnimalUseCase>();
-builder.Services.AddScoped<GetAllAnimalsUseCase>();
-builder.Services.AddScoped<GetAnimalByIdUseCase>();
-builder.Services.AddScoped<CountAllAnimalsUseCase>();
-builder.Services.AddScoped<DeleteAnimalUseCase>();
-
-// Vacunaciones
-builder.Services.AddScoped<IVacunacionRepository, VacunacionRepository>();
-builder.Services.AddScoped<CreateVacunacionUseCase>();
-builder.Services.AddScoped<FindAllVacunacionesUseCase>();
-
-// Desparasitaciones
-builder.Services.AddScoped<IDesparasitacionRepository, DesparasitacionRepository>();
-builder.Services.AddScoped<CreateDesparasitacionUseCase>();
-builder.Services.AddScoped<FindAllDesparasitacionesUseCase>();
-
-// Aseos
-builder.Services.AddScoped<IAseosRepository, AseoRepository>();
-builder.Services.AddScoped<CreateAseoUseCase>();
-builder.Services.AddScoped<FindAllAseosUseCase>();
-
-// Pesos
-builder.Services.AddScoped<IPesosRepository, PesoRepository>();
-builder.Services.AddScoped<CreatePesoUseCase>();
-builder.Services.AddScoped<FindAllPesosUseCase>();
+builder.Services.AddAnimals();
+builder.Services.AddVacunaciones();
+builder.Services.AddDesparasitaciones();
+builder.Services.AddAseos();
+builder.Services.AddPesos();
 
 builder.Services.AddControllers()
     .AddJsonOptions(x =>

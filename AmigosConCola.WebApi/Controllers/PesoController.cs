@@ -4,16 +4,17 @@ using AmigosConCola.WebApi.Presentation;
 using AutoMapper;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
+using Throw;
 
 namespace AmigosConCola.WebApi.Controllers;
 
 [ApiController]
-[Route("/api/animales")]
+[Route("/api/animales/{idAnimal:int}/pesos")]
 public class PesoController : BaseApiController
 {
-    private readonly ILogger<PesoController> _logger;
     private readonly CreatePesoUseCase _createPeso;
     private readonly FindAllPesosUseCase _findAllPesos;
+    private readonly ILogger<PesoController> _logger;
     private readonly IMapper _mapper;
 
     public PesoController(
@@ -28,7 +29,7 @@ public class PesoController : BaseApiController
         _mapper = mapper;
     }
 
-    [HttpGet("{idAnimal:int}/pesos")]
+    [HttpGet]
     public async Task<IActionResult> Index(int idAnimal)
     {
         var result = await _findAllPesos.Invoke(idAnimal);
@@ -36,7 +37,7 @@ public class PesoController : BaseApiController
         return Ok(response);
     }
 
-    [HttpPost("{idAnimal:int}/pesos")]
+    [HttpPost]
     public async Task<IActionResult> Store(
         int idAnimal,
         CreatePesoRequest request)
@@ -50,17 +51,12 @@ public class PesoController : BaseApiController
 
         var result = await _createPeso.Invoke(createPesoParams);
 
-        if (result.IsError && result.FirstError.Type == ErrorType.Validation)
-        {
+        if (result is { IsError: true, FirstError.Type: ErrorType.Validation })
             return ValidationErrors(result.Errors);
-        }
 
-        if (result.IsError)
-        {
-            return Problem(
-                statusCode: 400,
-                detail: result.FirstError.Description);
-        }
+        result.IsError
+            .Throw(() => new Exception(result.FirstError.Description))
+            .IfTrue();
 
         var response = _mapper.Map<PesoResponse>(result.Value);
 
@@ -68,5 +64,4 @@ public class PesoController : BaseApiController
             $"/api/animales/{idAnimal}/pesos/{result.Value.Id}",
             response);
     }
-
 }
