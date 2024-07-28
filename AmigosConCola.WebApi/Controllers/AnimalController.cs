@@ -3,6 +3,7 @@ using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
 using AmigosConCola.WebApi.Presentation;
 using ErrorOr;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmigosConCola.WebApi.Controllers;
@@ -37,12 +38,17 @@ public class AnimalController : BaseApiController
         _deleteAnimal = deleteAnimal;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> Index(
-        [FromQuery] int? page,
-        [FromQuery] int? perPage,
-        [FromQuery] string? species,
-        [FromQuery] string? name)
+        [FromQuery]
+        int? page,
+        [FromQuery]
+        int? perPage,
+        [FromQuery]
+        string? species,
+        [FromQuery]
+        string? name)
     {
         GetAllAnimalsFilters filters = new();
 
@@ -98,7 +104,8 @@ public class AnimalController : BaseApiController
 
     [HttpPost]
     public async Task<IActionResult> Store(
-        [FromForm] CreateAnimalRequest request)
+        [FromForm]
+        CreateAnimalRequest request)
     {
         AnimalSpecies species;
         AnimalGender gender;

@@ -1,6 +1,7 @@
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Extensions;
 using AmigosConCola.WebApi.Presentation;
+using Keycloak.AuthServices.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -18,6 +19,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(x =>
 
 builder.Services.AddCors();
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddLogin(builder.Configuration);
+
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
 
 builder.Services.AddAnimals();
 builder.Services.AddVacunaciones();
@@ -68,6 +74,9 @@ app.UseDirectoryBrowser(new DirectoryBrowserOptions
     FileProvider = fileProvider,
     RequestPath = staticRequestPath
 });
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

@@ -1,11 +1,27 @@
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
+using AmigosConCola.WebApi.Config.Auth;
+using AmigosConCola.WebApi.Controllers;
 using AmigosConCola.WebApi.Data.Repository;
 
 namespace AmigosConCola.WebApi.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddLogin(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddHttpClient<LoginController>("", x =>
+        {
+            var section = configuration.GetSection(nameof(AuthConfig));
+            var address = section.GetValue<string>("BaseUrl")!;
+            x.BaseAddress = new Uri(address);
+        });
+        services.Configure<AuthConfig>(configuration.GetSection(nameof(AuthConfig)));
+        return services;
+    }
+
     public static IServiceCollection AddAnimals(this IServiceCollection services)
     {
         services.AddScoped<IAnimalRepository, AnimalRepository>();
