@@ -10,6 +10,7 @@ services:
       POSTGRES_DB: amigosconcola
     volumes:
       - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./db/amigosconcola.db:/var/lib/postgresql/data
 
   keycloak_db:
     image: postgres
@@ -19,6 +20,8 @@ services:
     environment:
       POSTGRES_PASSWORD: amigosconcola
       POSTGRES_DB: keycloak
+    volumes:
+      - ./db/keycloak.db:/var/lib/postgresql/data
 
   keycloak:
     image: quay.io/keycloak/keycloak:25.0
