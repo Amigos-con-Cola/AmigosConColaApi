@@ -5,6 +5,7 @@ using AmigosConCola.WebApi.Presentation;
 using ErrorOr;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Throw;
 
 namespace AmigosConCola.WebApi.Controllers;
 
@@ -151,18 +152,17 @@ public class AnimalController : BaseApiController
             AnimalResponse.FromDomain(result.Value));
     }
 
-    [HttpPost("{id:int}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _deleteAnimal.Invoke(id);
 
-        if (result.IsError)
-        {
-            if (result.Errors.Count == 1 && result.FirstError.Type == ErrorType.NotFound)
-                return NotFound(result.FirstError.Description);
+        if (result is { IsError: true, FirstError.Type: ErrorType.NotFound })
+            return NotFound(result.FirstError.Description);
 
-            return ValidationErrors(result.Errors);
-        }
+        result.IsError
+            .Throw("Failed to delete animal")
+            .IfTrue();
 
         return Ok(result.Value);
     }
