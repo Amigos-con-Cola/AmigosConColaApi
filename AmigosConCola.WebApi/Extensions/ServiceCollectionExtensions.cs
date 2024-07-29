@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddHttpClient<LoginController>("", x =>
+        services.AddHttpClient<AuthController>("", x =>
         {
             var section = configuration.GetSection(nameof(AuthConfig));
             var address = section.GetValue<string>("BaseUrl")!;

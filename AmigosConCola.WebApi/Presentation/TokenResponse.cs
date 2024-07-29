@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace AmigosConCola.WebApi.Presentation;
 
-public class LoginResponse
+public class TokenResponse
 {
     [JsonPropertyName("access_token")]
     public required string AccessToken { get; set; }

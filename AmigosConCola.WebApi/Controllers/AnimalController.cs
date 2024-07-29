@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AmigosConCola.WebApi.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("/api/animals/")]
 public class AnimalController : BaseApiController
@@ -38,7 +39,6 @@ public class AnimalController : BaseApiController
         _deleteAnimal = deleteAnimal;
     }
 
-    [Authorize]
     [HttpGet]
     public async Task<IActionResult> Index(
         [FromQuery]

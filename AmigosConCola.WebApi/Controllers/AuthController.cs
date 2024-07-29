@@ -8,12 +8,12 @@ namespace AmigosConCola.WebApi.Controllers;
 
 [Route("/api/[controller]")]
 [ApiController]
-public class LoginController : BaseApiController
+public class AuthController : BaseApiController
 {
     private readonly AuthConfig _authConfig;
     private readonly HttpClient _httpClient;
 
-    public LoginController(
+    public AuthController(
         HttpClient httpClient,
         IOptions<AuthConfig> authConfig)
     {
@@ -21,7 +21,7 @@ public class LoginController : BaseApiController
         _authConfig = authConfig.Value;
     }
 
-    [HttpPost]
+    [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
         var payload = new Dictionary<string, string>
@@ -40,7 +40,31 @@ public class LoginController : BaseApiController
         if (!result.IsSuccessStatusCode)
             return Problem(statusCode: 401);
 
-        var response = await result.Content.ReadFromJsonAsync<LoginResponse>();
+        var response = await result.Content.ReadFromJsonAsync<TokenResponse>();
+        response.ThrowIfNull("Failed to deserialize keycloak response");
+
+        return Ok(response);
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh(RefreshTokenRequest request)
+    {
+        var payload = new Dictionary<string, string>
+        {
+            { "grant_type", "refresh_token" },
+            { "refresh_token", request.RefreshToken },
+            { "client_id", _authConfig.ClientId },
+            { "client_secret", _authConfig.ClientSecret }
+        };
+
+        var result = await _httpClient.PostAsync(
+            _authConfig.TokenEndpoint,
+            new FormUrlEncodedContent(payload));
+
+        if (!result.IsSuccessStatusCode)
+            return Problem(statusCode: 401);
+
+        var response = await result.Content.ReadFromJsonAsync<TokenResponse>();
         response.ThrowIfNull("Failed to deserialize keycloak response");
 
         return Ok(response);
