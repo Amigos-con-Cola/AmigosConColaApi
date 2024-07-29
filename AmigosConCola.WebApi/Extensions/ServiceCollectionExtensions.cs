@@ -30,6 +30,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<GetAnimalByIdUseCase>();
         services.AddScoped<CountAllAnimalsUseCase>();
         services.AddScoped<DeleteAnimalUseCase>();
+        services.AddScoped<UpdateAnimalUseCase>();
         return services;
     }
 

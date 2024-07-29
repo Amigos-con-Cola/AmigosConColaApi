@@ -2,6 +2,7 @@ using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Data.Dto;
+using AutoMapper;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,12 @@ namespace AmigosConCola.WebApi.Data.Repository;
 public class AnimalRepository : IAnimalRepository
 {
     private readonly ApplicationDbContext _db;
+    private readonly IMapper _mapper;
 
-    public AnimalRepository(ApplicationDbContext db)
+    public AnimalRepository(ApplicationDbContext db, IMapper mapper)
     {
         _db = db;
+        _mapper = mapper;
     }
 
     public async Task<ErrorOr<Animal>> Create(CreateAnimalParams parameters)
@@ -93,6 +96,35 @@ public class AnimalRepository : IAnimalRepository
         catch (Exception ex)
         {
             return Error.Failure(description: $"An error occurred while deleting the animal: {ex.Message}");
+        }
+    }
+
+    public async Task<ErrorOr<Animal>> Update(int id, UpdateAnimalParams parameters)
+    {
+        var animal = await _db.Animals.FindAsync(id);
+
+        if (animal is null)
+            return Error.NotFound(description: "No animal with that id");
+
+        animal.Name = parameters.Name ?? animal.Name;
+        animal.Age = parameters.Age ?? animal.Age;
+        animal.Gender = parameters.Gender ?? animal.Gender;
+        animal.ImageUrl = parameters.ImageUrl ?? animal.ImageUrl;
+        animal.Species = parameters.Species ?? animal.Species;
+        animal.Story = parameters.Story ?? animal.Story;
+        animal.Location = parameters.Location ?? animal.Location;
+        animal.Weight = parameters.Weight ?? animal.Weight;
+        animal.Code = parameters.Code ?? animal.Code;
+        animal.Adopted = parameters.Adopted ?? animal.Adopted;
+
+        try
+        {
+            await _db.SaveChangesAsync();
+            return _mapper.Map<Animal>(animal);
+        }
+        catch (Exception ex)
+        {
+            return Error.Unexpected(description: $"Error while updating the animal: {ex}");
         }
     }
 }

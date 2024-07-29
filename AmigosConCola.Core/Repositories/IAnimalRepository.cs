@@ -39,6 +39,15 @@ public interface IAnimalRepository
     /// <param name="id">The id of the animal</param>
     /// <returns>A bool or an error.</returns>
     public Task<ErrorOr<bool>> Delete(int id);
+
+
+    /// <summary>
+    ///     Update an animal by its id.
+    /// </summary>
+    /// <param name="id">The id of the animal to update.</param>
+    /// <param name="parameters">The data to update in the animal.</param>
+    /// <returns>The updated animal or an error.</returns>
+    public Task<ErrorOr<Animal>> Update(int id, UpdateAnimalParams parameters);
 }
 
 public class GetAllAnimalsFilters
@@ -58,4 +67,18 @@ public sealed class CreateAnimalParams
     public string Location { get; set; } = null!;
     public decimal Weight { get; set; }
     public string? Code { get; set; }
+}
+
+public sealed class UpdateAnimalParams
+{
+    public string? Name { get; set; }
+    public int? Age { get; set; }
+    public string? Gender { get; set; }
+    public string? ImageUrl { get; set; }
+    public string? Species { get; set; }
+    public string? Story { get; set; }
+    public string? Location { get; set; }
+    public decimal? Weight { get; set; }
+    public string? Code { get; set; }
+    public bool? Adopted { get; set; }
 }

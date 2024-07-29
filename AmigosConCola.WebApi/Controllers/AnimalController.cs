@@ -1,9 +1,9 @@
 using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
-using AmigosConCola.WebApi.Presentation;
 using AmigosConCola.WebApi.Presentation.Requests;
 using AmigosConCola.WebApi.Presentation.Responses;
+using AutoMapper;
 using ErrorOr;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +23,8 @@ public class AnimalController : BaseApiController
     private readonly GetAllAnimalsUseCase _getAllAnimals;
     private readonly GetAnimalByIdUseCase _getAnimalById;
     private readonly ILogger<AnimalController> _logger;
+    private readonly IMapper _mapper;
+    private readonly UpdateAnimalUseCase _updateAnimal;
 
     public AnimalController(
         ILogger<AnimalController> logger,
@@ -31,7 +33,9 @@ public class AnimalController : BaseApiController
         GetAllAnimalsUseCase getAllAnimals,
         CountAllAnimalsUseCase countAllAnimals,
         GetAnimalByIdUseCase getAnimalById,
-        DeleteAnimalUseCase deleteAnimal)
+        DeleteAnimalUseCase deleteAnimal,
+        UpdateAnimalUseCase updateAnimal,
+        IMapper mapper)
     {
         _logger = logger;
         _environment = environment;
@@ -40,6 +44,8 @@ public class AnimalController : BaseApiController
         _getAnimalById = getAnimalById;
         _countAllAnimals = countAllAnimals;
         _deleteAnimal = deleteAnimal;
+        _updateAnimal = updateAnimal;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -167,5 +173,21 @@ public class AnimalController : BaseApiController
             .IfTrue();
 
         return Ok(result.Value);
+    }
+
+    [HttpPatch("{id:int}")]
+    public async Task<IActionResult> Update(int id, UpdateAnimalRequest request)
+    {
+        var updateAnimalParams = _mapper.Map<UpdateAnimalParams>(request);
+        var result = await _updateAnimal.Invoke(id, updateAnimalParams);
+
+        if (result is { IsError: true, FirstError.Type: ErrorType.NotFound })
+            return Problem(statusCode: 404, detail: result.FirstError.Description);
+
+        result.IsError.Throw($"Failed to update the animal: {id}").IfTrue();
+
+        var response = _mapper.Map<AnimalResponse>(result.Value);
+
+        return Ok(response);
     }
 }
