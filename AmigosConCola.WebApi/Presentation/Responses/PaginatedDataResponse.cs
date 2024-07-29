@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace AmigosConCola.WebApi.Presentation;
+namespace AmigosConCola.WebApi.Presentation.Responses;
 
 public class PaginatedDataResponse<T>
     where T : class

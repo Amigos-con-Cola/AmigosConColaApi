@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using AmigosConCola.Core.Models;
 
-namespace AmigosConCola.WebApi.Presentation;
+namespace AmigosConCola.WebApi.Presentation.Responses;
 
 public class VacunacionResponse
 {

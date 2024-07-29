@@ -1,5 +1,7 @@
 using AmigosConCola.WebApi.Config.Auth;
 using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Presentation.Requests;
+using AmigosConCola.WebApi.Presentation.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Throw;

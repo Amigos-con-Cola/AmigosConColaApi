@@ -1,6 +1,8 @@
 using System.Net.Http.Json;
 using AmigosConCola.IntegrationTests.FakeData;
 using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Presentation.Requests;
+using AmigosConCola.WebApi.Presentation.Responses;
 using FluentAssertions;
 using Xunit.Abstractions;
 

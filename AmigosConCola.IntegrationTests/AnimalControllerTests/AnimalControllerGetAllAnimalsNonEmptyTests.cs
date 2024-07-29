@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using AmigosConCola.IntegrationTests.FakeData;
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Presentation.Responses;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

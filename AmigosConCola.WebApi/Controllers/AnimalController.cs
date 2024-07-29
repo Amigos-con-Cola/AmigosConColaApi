@@ -2,6 +2,8 @@ using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
 using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Presentation.Requests;
+using AmigosConCola.WebApi.Presentation.Responses;
 using ErrorOr;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

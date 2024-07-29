@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Presentation.Responses;
 using FluentAssertions;
 
 namespace AmigosConCola.IntegrationTests.AnimalControllerTests;

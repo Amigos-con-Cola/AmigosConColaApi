@@ -1,6 +1,8 @@
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
 using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Presentation.Requests;
+using AmigosConCola.WebApi.Presentation.Responses;
 using AutoMapper;
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;

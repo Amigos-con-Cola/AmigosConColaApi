@@ -3,6 +3,7 @@ using AmigosConCola.IntegrationTests.FakeData;
 using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Data.Dto;
 using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Presentation.Responses;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 

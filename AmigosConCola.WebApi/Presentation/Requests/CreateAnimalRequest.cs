@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace AmigosConCola.WebApi.Presentation;
+namespace AmigosConCola.WebApi.Presentation.Requests;
 
 public class CreateAnimalRequest
 {

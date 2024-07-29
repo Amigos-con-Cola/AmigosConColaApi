@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AmigosConCola.WebApi.Presentation;
+namespace AmigosConCola.WebApi.Presentation.Converters;
 
 public sealed class DateOnlyJsonConverter : JsonConverter<DateOnly>
 {

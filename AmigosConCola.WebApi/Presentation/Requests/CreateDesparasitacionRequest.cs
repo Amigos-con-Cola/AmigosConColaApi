@@ -1,15 +1,9 @@
 using System.Text.Json.Serialization;
 
-namespace AmigosConCola.WebApi.Presentation;
+namespace AmigosConCola.WebApi.Presentation.Requests;
 
-public sealed class DesparasitacionResponse
+public sealed class CreateDesparasitacionRequest
 {
-    [JsonPropertyName("id")]
-    public int Id { get; set; }
-
-    [JsonPropertyName("id_animal")]
-    public int IdAnimal { get; set; }
-
     [JsonPropertyName("tipo")]
     public string Tipo { get; set; } = null!;
 
@@ -24,5 +18,4 @@ public sealed class DesparasitacionResponse
 
     [JsonPropertyName("formato")]
     public string Formato { get; set; } = null!;
-
 }

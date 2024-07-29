@@ -1,4 +1,5 @@
 using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Presentation.Requests;
 using Bogus;
 using Bogus.DataSets;
 
