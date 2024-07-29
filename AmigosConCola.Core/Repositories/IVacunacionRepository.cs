@@ -19,3 +19,11 @@ public interface IVacunacionRepository
     /// <returns>A list of all vacunaciones for the given animal</returns>
     public Task<ErrorOr<IEnumerable<Vacunacion>>> FindAll(int animalId);
 }
+
+public class CreateVacunacionParams
+{
+    public int IdAnimal { get; set; }
+    public string Name { get; set; } = null!;
+    public DateOnly Date { get; set; }
+    public string? ExamenPrevio { get; set; }
+}

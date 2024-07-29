@@ -19,3 +19,10 @@ public interface IAseosRepository
     /// <returns>A list of all aseos for the specified animal</returns>
     Task<IEnumerable<Aseo>> FindAll(int idAnimal);
 }
+
+public class CreateAseoParams
+{
+    public int IdAnimal { get; set; }
+    public string Tipo { get; set; } = null!;
+    public DateOnly Fecha { get; set; }
+}
