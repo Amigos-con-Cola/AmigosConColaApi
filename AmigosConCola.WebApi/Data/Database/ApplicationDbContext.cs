@@ -1,4 +1,4 @@
-using AmigosConCola.WebApi.Data.Dto;
+using AmigosConCola.WebApi.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AmigosConCola.WebApi.Data.Database;
@@ -10,33 +10,33 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<AnimalDto> Animals { get; set; } = null!;
-    public DbSet<VacunacionDto> Vacunaciones { get; set; } = null!;
-    public DbSet<DesparasitacionDto> Desparasitaciones { get; set; } = null!;
-    public DbSet<AseoDto> Aseos { get; set; } = null!;
-    public DbSet<PesoDto> Pesos { get; set; } = null!;
+    public DbSet<AnimalEntity> Animals { get; set; } = null!;
+    public DbSet<VacunacionEntity> Vacunaciones { get; set; } = null!;
+    public DbSet<DesparasitacionEntity> Desparasitaciones { get; set; } = null!;
+    public DbSet<AseoEntity> Aseos { get; set; } = null!;
+    public DbSet<PesoEntity> Pesos { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AnimalDto>()
+        modelBuilder.Entity<AnimalEntity>()
             .HasMany(x => x.Vacunaciones)
             .WithOne(x => x.Animal)
             .HasForeignKey(x => x.IdAnimal)
             .HasPrincipalKey(x => x.Id);
 
-        modelBuilder.Entity<AnimalDto>()
+        modelBuilder.Entity<AnimalEntity>()
             .HasMany(x => x.Desparasitaciones)
             .WithOne(x => x.Animal)
             .HasForeignKey(x => x.IdAnimal)
             .HasPrincipalKey(x => x.Id);
 
-        modelBuilder.Entity<AnimalDto>()
+        modelBuilder.Entity<AnimalEntity>()
             .HasMany(x => x.Aseos)
             .WithOne(x => x.Animal)
             .HasForeignKey(x => x.IdAnimal)
             .HasPrincipalKey(x => x.Id);
-        
-        modelBuilder.Entity<AnimalDto>()
+
+        modelBuilder.Entity<AnimalEntity>()
             .HasMany(x => x.Pesos)
             .WithOne(x => x.Animal)
             .HasForeignKey(x => x.IdAnimal)

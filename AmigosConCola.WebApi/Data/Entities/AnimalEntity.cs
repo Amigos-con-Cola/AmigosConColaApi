@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using AmigosConCola.Core.Models;
 using ErrorOr;
 
-namespace AmigosConCola.WebApi.Data.Dto;
+namespace AmigosConCola.WebApi.Data.Entities;
 
 [Table("animals")]
-public class AnimalDto
+public class AnimalEntity
 {
     [Column("id")]
     public int Id { get; set; }
@@ -40,13 +40,13 @@ public class AnimalDto
     [Column("weight")]
     public decimal Weight { get; set; }
 
-    public ICollection<VacunacionDto> Vacunaciones { get; } = null!;
+    public ICollection<VacunacionEntity> Vacunaciones { get; } = null!;
 
-    public ICollection<DesparasitacionDto> Desparasitaciones { get; } = null!;
+    public ICollection<DesparasitacionEntity> Desparasitaciones { get; } = null!;
 
-    public ICollection<AseoDto> Aseos { get; } = null!;
-    
-    public ICollection<PesoDto> Pesos { get; } = null!;
+    public ICollection<AseoEntity> Aseos { get; } = null!;
+
+    public ICollection<PesoEntity> Pesos { get; } = null!;
 
     public ErrorOr<Animal> ToDomain()
     {

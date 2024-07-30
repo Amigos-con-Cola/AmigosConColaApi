@@ -1,8 +1,7 @@
 using System.Net.Http.Json;
 using AmigosConCola.IntegrationTests.FakeData;
 using AmigosConCola.WebApi.Data.Database;
-using AmigosConCola.WebApi.Data.Dto;
-using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Data.Entities;
 using AmigosConCola.WebApi.Presentation.Responses;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +25,7 @@ public class AnimalControllerNameFilterTests : IClassFixture<TestWebApplicationF
         var scopedServices = scope.ServiceProvider;
         var db = scopedServices.GetRequiredService<ApplicationDbContext>();
 
-        AnimalDto[] animalDtos = [AnimalDtoFake.Get(), AnimalDtoFake.Get()];
+        AnimalEntity[] animalDtos = [AnimalDtoFake.Get(), AnimalDtoFake.Get()];
         animalDtos[0].Name = "Firulais";
         animalDtos[1].Name = "John";
 

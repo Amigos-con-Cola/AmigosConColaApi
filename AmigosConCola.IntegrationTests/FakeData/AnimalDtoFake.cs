@@ -1,4 +1,4 @@
-using AmigosConCola.WebApi.Data.Dto;
+using AmigosConCola.WebApi.Data.Entities;
 using Bogus;
 using Bogus.DataSets;
 
@@ -6,7 +6,7 @@ namespace AmigosConCola.IntegrationTests.FakeData;
 
 public class AnimalDtoFake
 {
-    public static AnimalDto Get(
+    public static AnimalEntity Get(
         int? age = null,
         string? name = null,
         string? imageUrl = null,
@@ -16,7 +16,7 @@ public class AnimalDtoFake
         var names = new Name();
         var url = new Images();
         var lorem = new Lorem();
-        return new AnimalDto
+        return new AnimalEntity
         {
             Id = random.Int(),
             Age = age ?? random.Int(1, 20),

@@ -1,7 +1,6 @@
 using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
-using AmigosConCola.WebApi.Data.Dto;
-using AmigosConCola.WebApi.Presentation;
+using AmigosConCola.WebApi.Data.Entities;
 using AmigosConCola.WebApi.Presentation.Responses;
 using AutoMapper;
 
@@ -13,7 +12,7 @@ public class AutoMapperAseosProfile : Profile
     {
         // Aseos
         CreateMap<Aseo, AseoResponse>();
-        CreateMap<AseoDto, Aseo>();
-        CreateMap<CreateAseoParams, AseoDto>();
+        CreateMap<AseoEntity, Aseo>();
+        CreateMap<CreateAseoParams, AseoEntity>();
     }
 }

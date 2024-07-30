@@ -1,7 +1,7 @@
 using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.WebApi.Data.Database;
-using AmigosConCola.WebApi.Data.Dto;
+using AmigosConCola.WebApi.Data.Entities;
 using ErrorOr;
 
 namespace AmigosConCola.WebApi.Data.Repository;
@@ -17,14 +17,14 @@ public sealed class DesparasitacionRepository : IDesparasitacionRepository
 
     public async Task<ErrorOr<Desparasitacion>> Create(CreateDesparasitacionParams parameters)
     {
-        var dto = new DesparasitacionDto
+        var dto = new DesparasitacionEntity
         {
             IdAnimal = parameters.IdAnimal,
             Tipo = parameters.Tipo,
             Fecha = parameters.Fecha,
             Producto = parameters.Producto,
             Peso = parameters.Peso,
-            Formato = parameters.Formato,
+            Formato = parameters.Formato
         };
 
         var result = await _db.AddAsync(dto);
@@ -43,7 +43,7 @@ public sealed class DesparasitacionRepository : IDesparasitacionRepository
             Fecha = result.Entity.Fecha,
             Producto = result.Entity.Producto,
             Peso = result.Entity.Peso,
-            Formato = result.Entity.Formato,
+            Formato = result.Entity.Formato
         };
     }
 
@@ -60,7 +60,7 @@ public sealed class DesparasitacionRepository : IDesparasitacionRepository
                 Fecha = x.Fecha,
                 Producto = x.Producto,
                 Peso = x.Peso,
-                Formato = x.Formato,
+                Formato = x.Formato
             })
             .AsEnumerable());
     }

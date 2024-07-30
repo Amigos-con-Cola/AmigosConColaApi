@@ -1,7 +1,7 @@
 using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.WebApi.Data.Database;
-using AmigosConCola.WebApi.Data.Dto;
+using AmigosConCola.WebApi.Data.Entities;
 using AutoMapper;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +34,7 @@ public sealed class AseoRepository : IAseosRepository
         if (animal is null)
             return Error.NotFound(description: "The provided animal id is invalid");
 
-        var dto = _mapper.Map<AseoDto>(parameters);
+        var dto = _mapper.Map<AseoEntity>(parameters);
 
         try
         {

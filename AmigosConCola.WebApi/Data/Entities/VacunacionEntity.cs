@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using AmigosConCola.Core.Models;
 
-namespace AmigosConCola.WebApi.Data.Dto;
+namespace AmigosConCola.WebApi.Data.Entities;
 
 [Table("vacunaciones")]
-public class VacunacionDto
+public class VacunacionEntity
 {
     [Column("id")]
     public int Id { get; set; }
@@ -21,7 +21,7 @@ public class VacunacionDto
     [Column("examen_previo")]
     public string? ExamenPrevio { get; set; }
 
-    public AnimalDto Animal { get; set; } = null!;
+    public AnimalEntity Animal { get; set; } = null!;
 
     public Vacunacion ToDomain()
     {

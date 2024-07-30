@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AmigosConCola.WebApi.Data.Dto;
+namespace AmigosConCola.WebApi.Data.Entities;
 
 [Table("desparasitaciones")]
-public sealed class DesparasitacionDto
+public sealed class DesparasitacionEntity
 {
     [Column("id")]
     public int? Id { get; set; }
@@ -26,5 +26,5 @@ public sealed class DesparasitacionDto
     [Column("formato")]
     public string Formato { get; set; } = null!;
 
-    public AnimalDto Animal { get; set; } = null!;
+    public AnimalEntity Animal { get; set; } = null!;
 }

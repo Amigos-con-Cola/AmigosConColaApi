@@ -1,7 +1,7 @@
 using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.WebApi.Data.Database;
-using AmigosConCola.WebApi.Data.Dto;
+using AmigosConCola.WebApi.Data.Entities;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +25,7 @@ public class VacunacionRepository : IVacunacionRepository
             return Error.NotFound(description: "There is not animal with that id");
         }
 
-        var dto = new VacunacionDto
+        var dto = new VacunacionEntity
         {
             IdAnimal = parameters.IdAnimal,
             Name = parameters.Name,

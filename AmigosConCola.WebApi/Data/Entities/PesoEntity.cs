@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AmigosConCola.WebApi.Data.Dto;
+namespace AmigosConCola.WebApi.Data.Entities;
 
-[Table("aseos")]
-public sealed class AseoDto
+[Table("pesos")]
+public sealed class PesoEntity
 {
     [Column("id")]
     public int Id { get; set; }
@@ -11,11 +11,11 @@ public sealed class AseoDto
     [Column("id_animal")]
     public int IdAnimal { get; set; }
 
-    [Column("tipo")]
-    public string Tipo { get; set; } = null!;
+    [Column("peso_actual")]
+    public decimal PesoActual { get; set; }
 
     [Column("fecha")]
     public DateOnly Fecha { get; set; }
 
-    public AnimalDto Animal { get; set; } = null!;
+    public AnimalEntity Animal { get; set; } = null!;
 }

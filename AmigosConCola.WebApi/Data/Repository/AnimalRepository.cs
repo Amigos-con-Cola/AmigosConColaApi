@@ -1,7 +1,7 @@
 using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.WebApi.Data.Database;
-using AmigosConCola.WebApi.Data.Dto;
+using AmigosConCola.WebApi.Data.Entities;
 using AutoMapper;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ public class AnimalRepository : IAnimalRepository
 
     public async Task<ErrorOr<Animal>> Create(CreateAnimalParams parameters)
     {
-        var dto = new AnimalDto
+        var dto = new AnimalEntity
         {
             Name = parameters.Name,
             Age = parameters.Age,
