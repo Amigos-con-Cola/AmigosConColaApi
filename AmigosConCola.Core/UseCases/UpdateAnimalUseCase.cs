@@ -15,10 +15,10 @@ public class UpdateAnimalUseCase
 
     public async Task<ErrorOr<Animal>> Invoke(int id, UpdateAnimalParams parameters)
     {
-        if (!Enum.TryParse(parameters.Species, true, out AnimalSpecies _))
+        if (parameters.Species is not null && !Enum.TryParse(parameters.Species, true, out AnimalSpecies _))
             return Error.Validation(description: $"Invalid animal species: {parameters.Species}");
 
-        if (!Enum.TryParse(parameters.Gender, true, out AnimalGender _))
+        if (parameters.Gender is not null && !Enum.TryParse(parameters.Gender, true, out AnimalGender _))
             return Error.Validation(description: $"Invalid animal gender: {parameters.Gender}");
 
         return await _animals.Update(id, parameters);

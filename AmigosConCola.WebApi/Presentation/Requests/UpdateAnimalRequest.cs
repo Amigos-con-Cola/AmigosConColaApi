@@ -4,33 +4,33 @@ namespace AmigosConCola.WebApi.Presentation.Requests;
 
 public class UpdateAnimalRequest
 {
-    [JsonPropertyName("name")]
+    [JsonPropertyName("nombre")]
     public string? Name { get; set; }
 
-    [JsonPropertyName("age")]
+    [JsonPropertyName("edad")]
     public int? Age { get; set; }
 
-    [JsonPropertyName("gender")]
+    [JsonPropertyName("genero")]
     public string? Gender { get; set; }
 
-    [JsonPropertyName("description")]
+    [JsonPropertyName("descripcion")]
     public string? ImageUrl { get; set; }
 
-    [JsonPropertyName("species")]
+    [JsonPropertyName("especie")]
     public string? Species { get; set; }
 
-    [JsonPropertyName("story")]
+    [JsonPropertyName("historia")]
     public string? Story { get; set; }
 
-    [JsonPropertyName("location")]
+    [JsonPropertyName("ubicacion")]
     public string? Location { get; set; }
 
-    [JsonPropertyName("weight")]
+    [JsonPropertyName("peso")]
     public decimal? Weight { get; set; }
 
-    [JsonPropertyName("code")]
+    [JsonPropertyName("codigo")]
     public string? Code { get; set; }
 
-    [JsonPropertyName("adopted")]
+    [JsonPropertyName("adoptado")]
     public bool? Adopted { get; set; }
 }
