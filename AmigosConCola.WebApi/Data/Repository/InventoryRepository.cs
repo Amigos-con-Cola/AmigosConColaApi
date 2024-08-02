@@ -4,6 +4,7 @@ using AmigosConCola.WebApi.Data.Database;
 using AmigosConCola.WebApi.Data.Entities;
 using AutoMapper;
 using ErrorOr;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmigosConCola.WebApi.Data.Repository;
 
@@ -31,5 +32,21 @@ public class InventoryRepository : IInventoryRepository
         {
             return Error.Unexpected(description: $"Failed to create inventory item: {ex}");
         }
+    }
+
+    public async Task<ErrorOr<IEnumerable<InventoryItem>>> GetPaginated(PaginationParams paginationParams)
+    {
+        var result = await _db.Inventory
+            .OrderByDescending(x => x.Id)
+            .Skip((paginationParams.Page - 1) * paginationParams.PerPage)
+            .Take(paginationParams.PerPage)
+            .Select(x => _mapper.Map<InventoryItem>(x))
+            .ToListAsync();
+        return result;
+    }
+
+    public async Task<int> CountAllItems()
+    {
+        return await _db.Inventory.CountAsync();
     }
 }

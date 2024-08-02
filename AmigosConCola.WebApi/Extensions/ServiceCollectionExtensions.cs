@@ -70,6 +70,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IInventoryRepository, InventoryRepository>();
         services.AddScoped<CreateInventoryItemUseCase>();
+        services.AddScoped<GetPaginatedInventoryItems>();
+        services.AddScoped<CountAllInventoryItemsUseCase>();
         return services;
     }
 }
