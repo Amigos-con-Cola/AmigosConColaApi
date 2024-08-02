@@ -65,4 +65,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<FindAllPesosUseCase>();
         return services;
     }
+
+    public static IServiceCollection AddInventory(this IServiceCollection services)
+    {
+        services.AddScoped<IInventoryRepository, InventoryRepository>();
+        services.AddScoped<CreateInventoryItemUseCase>();
+        return services;
+    }
 }

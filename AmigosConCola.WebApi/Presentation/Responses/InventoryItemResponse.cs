@@ -1,10 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace AmigosConCola.WebApi.Presentation.Requests;
+namespace AmigosConCola.WebApi.Presentation.Responses;
 
-public class CreateInventoryItemRequest
+public class InventoryItemResponse
 {
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
+
     [JsonPropertyName("nombre")]
     public required string Name { get; set; }
 

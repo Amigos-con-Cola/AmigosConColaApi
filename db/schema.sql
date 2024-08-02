@@ -56,3 +56,26 @@ create table pesos
 
     foreign key (id_animal) references animals (id) on delete cascade
 );
+
+create table inventory
+(
+    id              serial primary key,
+    name            text not null,
+    main_ingredient text not null,
+    -- Validate format
+    format          text not null,
+    -- Validate volume
+    volume          text not null,
+    -- Validate via
+    via             text not null,
+    expiration_date date not null,
+    laboratory      text not null,
+    origin          text not null,
+    -- Validate status
+    status          text not null,
+    entry_date      date not null,
+    box_id          text not null,
+    -- Should be an int?
+    stock           text not null,
+    kind            text not null
+);

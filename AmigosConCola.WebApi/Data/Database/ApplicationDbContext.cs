@@ -15,6 +15,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<DesparasitacionEntity> Desparasitaciones { get; set; } = null!;
     public DbSet<AseoEntity> Aseos { get; set; } = null!;
     public DbSet<PesoEntity> Pesos { get; set; } = null!;
+    public DbSet<InventoryItemEntity> Inventory { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
