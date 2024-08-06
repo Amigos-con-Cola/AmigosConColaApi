@@ -62,6 +62,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.Urls.Add("http://0.0.0.0:5130");
+
 // app.UseHttpsRedirection();
 
 app.UseCors(x =>
