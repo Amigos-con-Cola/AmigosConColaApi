@@ -1,6 +1,5 @@
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
-using AmigosConCola.WebApi.Presentation;
 using AmigosConCola.WebApi.Presentation.Requests;
 using AmigosConCola.WebApi.Presentation.Responses;
 using ErrorOr;
@@ -29,11 +28,11 @@ public class VacunacionController : BaseApiController
         var result = await _findAllVacunaciones.Invoke(animalId);
 
         if (result.IsError && result.FirstError.Type == ErrorType.NotFound)
-        {
             return NotFound(result.FirstError.Description);
-        }
 
-        return Ok(result.Value);
+        var response = result.Value.Select(VacunacionResponse.FromDomain);
+
+        return Ok(response);
     }
 
     [HttpPost("{animalId:int}/vacunaciones")]
