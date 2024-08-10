@@ -63,7 +63,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.Urls.Add("http://0.0.0.0:5130");
+app.Urls.Add("http://0.0.0.0:5000");
 
 // app.UseHttpsRedirection();
 
