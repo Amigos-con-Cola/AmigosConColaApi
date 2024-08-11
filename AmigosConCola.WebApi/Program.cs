@@ -36,6 +36,8 @@ builder.Services.AddLogin(builder.Configuration);
 builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 
+builder.Services.AddStorage();
+
 builder.Services.AddAnimals();
 builder.Services.AddVacunaciones();
 builder.Services.AddDesparasitaciones();

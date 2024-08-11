@@ -1,6 +1,7 @@
 using AmigosConCola.Core.Models;
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
+using AmigosConCola.Core.UseCases.Animals;
 using AmigosConCola.WebApi.Presentation.Requests;
 using AmigosConCola.WebApi.Presentation.Responses;
 using AutoMapper;
@@ -19,17 +20,16 @@ public class AnimalController : BaseApiController
     private readonly CountAllAnimalsUseCase _countAllAnimals;
     private readonly CreateAnimalUseCase _createAnimal;
     private readonly DeleteAnimalUseCase _deleteAnimal;
-    private readonly IWebHostEnvironment _environment;
     private readonly GetAllAnimalsUseCase _getAllAnimals;
     private readonly GetAnimalByIdUseCase _getAnimalById;
     private readonly ILogger<AnimalController> _logger;
     private readonly IMapper _mapper;
+    private readonly StoreAnimalImageUseCase _storeAnimalImage;
     private readonly UpdateAnimalUseCase _updateAnimal;
     private readonly UpdateAnimalImageUrlUseCase _updateAnimalImageUrlUseCase;
 
     public AnimalController(
         ILogger<AnimalController> logger,
-        IWebHostEnvironment environment,
         CreateAnimalUseCase createAnimal,
         GetAllAnimalsUseCase getAllAnimals,
         CountAllAnimalsUseCase countAllAnimals,
@@ -37,10 +37,10 @@ public class AnimalController : BaseApiController
         DeleteAnimalUseCase deleteAnimal,
         UpdateAnimalUseCase updateAnimal,
         IMapper mapper,
-        UpdateAnimalImageUrlUseCase updateAnimalImageUrlUseCase)
+        UpdateAnimalImageUrlUseCase updateAnimalImageUrlUseCase,
+        StoreAnimalImageUseCase storeAnimalImage)
     {
         _logger = logger;
-        _environment = environment;
         _createAnimal = createAnimal;
         _getAllAnimals = getAllAnimals;
         _getAnimalById = getAnimalById;
@@ -49,6 +49,7 @@ public class AnimalController : BaseApiController
         _updateAnimal = updateAnimal;
         _mapper = mapper;
         _updateAnimalImageUrlUseCase = updateAnimalImageUrlUseCase;
+        _storeAnimalImage = storeAnimalImage;
     }
 
     [HttpGet]
@@ -122,6 +123,7 @@ public class AnimalController : BaseApiController
         AnimalSpecies species;
         AnimalGender gender;
 
+        // TODO: Move this validation to use case.
         if (!Enum.TryParse(request.Species, true, out species))
             return Problem("Invalid species", statusCode: 400);
 
@@ -132,12 +134,10 @@ public class AnimalController : BaseApiController
 
         if (request.Image is not null)
         {
-            // TODO: We may want to ensure these filenames are unique.
-            var filePath = Path.Combine(_environment.ContentRootPath, "Images", request.Image.FileName);
-            using var stream = new FileStream(filePath, FileMode.Create);
-            await request.Image.CopyToAsync(stream);
-            _logger.LogInformation($"Stored image to path: {filePath}");
-            imageUrl = $"{Request.Scheme}://{Request.Host}/images/{request.Image.FileName}";
+            await using var imageStream = request.Image.OpenReadStream();
+            var uri = await _storeAnimalImage.Invoke(imageStream, request.Image.FileName);
+            uri.IsError.Throw("Failed to store image").IfTrue();
+            imageUrl = uri.Value.ToString();
         }
 
         var result = await _createAnimal.Invoke(new CreateAnimalParams
@@ -194,14 +194,11 @@ public class AnimalController : BaseApiController
     [HttpPut("{id:int}/image")]
     public async Task<IActionResult> UpdateImage(int id, UpdateAnimalImageUrlRequest request)
     {
-        // TODO: Extract this logic to a use case.
-        var filePath = Path.Combine(_environment.ContentRootPath, "Images", request.Image.FileName);
-        await using var stream = new FileStream(filePath, FileMode.Create);
-        await request.Image.CopyToAsync(stream);
-        _logger.LogInformation($"Stored image to path: {filePath}");
-        var imageUrl = $"{Request.Scheme}://{Request.Host}/images/{request.Image.FileName}";
-        var result = await _updateAnimalImageUrlUseCase.Invoke(id, imageUrl);
+        await using var imageStream = request.Image.OpenReadStream();
+        var uri = await _storeAnimalImage.Invoke(imageStream, request.Image.FileName);
+        uri.IsError.Throw("Failed to store image").IfTrue();
 
+        var result = await _updateAnimalImageUrlUseCase.Invoke(id, uri.Value.ToString());
         if (result is { IsError: true, FirstError.Type: ErrorType.NotFound })
             return Problem(statusCode: 404, detail: result.FirstError.Description);
 

@@ -1,5 +1,6 @@
 using AmigosConCola.Core.Repositories;
 using AmigosConCola.Core.UseCases;
+using AmigosConCola.Core.UseCases.Animals;
 using AmigosConCola.WebApi.Config.Auth;
 using AmigosConCola.WebApi.Controllers;
 using AmigosConCola.WebApi.Data.Repository;
@@ -22,6 +23,13 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddStorage(this IServiceCollection services)
+    {
+        services.AddScoped<IImageStorageRepository, ImageStorageRepository>();
+        services.AddHttpContextAccessor();
+        return services;
+    }
+
     public static IServiceCollection AddAnimals(this IServiceCollection services)
     {
         services.AddScoped<IAnimalRepository, AnimalRepository>();
@@ -32,6 +40,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<DeleteAnimalUseCase>();
         services.AddScoped<UpdateAnimalUseCase>();
         services.AddScoped<UpdateAnimalImageUrlUseCase>();
+        services.AddScoped<StoreAnimalImageUseCase>();
         return services;
     }
 
