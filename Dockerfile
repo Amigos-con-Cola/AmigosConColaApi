@@ -21,6 +21,8 @@ WORKDIR /app
 
 EXPOSE 5000
 
+RUN mkdir -p /app/Images
+
 COPY --from=build /app/build /app/build
 
 COPY --from=publish /app/publish .
