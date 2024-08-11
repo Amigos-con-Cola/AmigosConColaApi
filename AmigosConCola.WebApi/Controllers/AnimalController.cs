@@ -125,8 +125,7 @@ public class AnimalController : BaseApiController
         if (!Enum.TryParse(request.Gender, true, out gender))
             return Problem("Invalid gender", statusCode: 400);
 
-        // NOTE: For this to work there needs to exist an Images directory at the root of the web api project.
-        // TODO: Automate the creation of this directory.
+        Directory.CreateDirectory(Path.Combine(_environment.ContentRootPath, "Images"));
 
         string? imageUrl = null;
 
