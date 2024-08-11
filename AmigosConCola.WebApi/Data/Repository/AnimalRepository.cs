@@ -127,4 +127,17 @@ public class AnimalRepository : IAnimalRepository
             return Error.Unexpected(description: $"Error while updating the animal: {ex}");
         }
     }
+
+    public async Task<ErrorOr<Animal>> UpdateImageUrl(int id, string imageUrl)
+    {
+        var animalEntity = await _db.Animals.FindAsync(id);
+        if (animalEntity is null)
+            return Error.NotFound(description: "No animal with the given ID");
+
+        animalEntity.ImageUrl = imageUrl;
+
+        await _db.SaveChangesAsync();
+
+        return _mapper.Map<Animal>(animalEntity);
+    }
 }

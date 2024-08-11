@@ -25,6 +25,7 @@ public class AnimalController : BaseApiController
     private readonly ILogger<AnimalController> _logger;
     private readonly IMapper _mapper;
     private readonly UpdateAnimalUseCase _updateAnimal;
+    private readonly UpdateAnimalImageUrlUseCase _updateAnimalImageUrlUseCase;
 
     public AnimalController(
         ILogger<AnimalController> logger,
@@ -35,7 +36,8 @@ public class AnimalController : BaseApiController
         GetAnimalByIdUseCase getAnimalById,
         DeleteAnimalUseCase deleteAnimal,
         UpdateAnimalUseCase updateAnimal,
-        IMapper mapper)
+        IMapper mapper,
+        UpdateAnimalImageUrlUseCase updateAnimalImageUrlUseCase)
     {
         _logger = logger;
         _environment = environment;
@@ -46,6 +48,7 @@ public class AnimalController : BaseApiController
         _deleteAnimal = deleteAnimal;
         _updateAnimal = updateAnimal;
         _mapper = mapper;
+        _updateAnimalImageUrlUseCase = updateAnimalImageUrlUseCase;
     }
 
     [HttpGet]
@@ -186,5 +189,24 @@ public class AnimalController : BaseApiController
         var response = _mapper.Map<AnimalResponse>(result.Value);
 
         return Ok(response);
+    }
+
+    [HttpPut("{id:int}/image")]
+    public async Task<IActionResult> UpdateImage(int id, UpdateAnimalImageUrlRequest request)
+    {
+        // TODO: Extract this logic to a use case.
+        var filePath = Path.Combine(_environment.ContentRootPath, "Images", request.Image.FileName);
+        await using var stream = new FileStream(filePath, FileMode.Create);
+        await request.Image.CopyToAsync(stream);
+        _logger.LogInformation($"Stored image to path: {filePath}");
+        var imageUrl = $"{Request.Scheme}://{Request.Host}/images/{request.Image.FileName}";
+        var result = await _updateAnimalImageUrlUseCase.Invoke(id, imageUrl);
+
+        if (result is { IsError: true, FirstError.Type: ErrorType.NotFound })
+            return Problem(statusCode: 404, detail: result.FirstError.Description);
+
+        result.IsError.Throw($"Failed to update the image for animal: {id}").IfTrue();
+
+        return Ok(_mapper.Map<AnimalResponse>(result.Value));
     }
 }

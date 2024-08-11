@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<CountAllAnimalsUseCase>();
         services.AddScoped<DeleteAnimalUseCase>();
         services.AddScoped<UpdateAnimalUseCase>();
+        services.AddScoped<UpdateAnimalImageUrlUseCase>();
         return services;
     }
 

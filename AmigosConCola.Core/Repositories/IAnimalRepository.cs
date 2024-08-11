@@ -48,6 +48,14 @@ public interface IAnimalRepository
     /// <param name="parameters">The data to update in the animal.</param>
     /// <returns>The updated animal or an error.</returns>
     public Task<ErrorOr<Animal>> Update(int id, UpdateAnimalParams parameters);
+
+    /// <summary>
+    ///     Update the animal's image url.
+    /// </summary>
+    /// <param name="id">The id of the animal for which to update the url</param>
+    /// <param name="imageUrl">The new image url</param>
+    /// <returns>The updated animal, or an error.</returns>
+    public Task<ErrorOr<Animal>> UpdateImageUrl(int id, string imageUrl);
 }
 
 public class GetAllAnimalsFilters
