@@ -12,10 +12,10 @@ public class CreateInventoryItemRequest
     public required string MainIngredient { get; set; }
 
     [JsonPropertyName("formato")]
-    public required string Format { get; set; }
+    public string? Format { get; set; }
 
     [JsonPropertyName("volumen")]
-    public required string Volume { get; set; }
+    public required int Volume { get; set; }
 
     [JsonPropertyName("via")]
     public required string Via { get; set; }
@@ -25,10 +25,10 @@ public class CreateInventoryItemRequest
     public required DateOnly ExpirationDate { get; set; }
 
     [JsonPropertyName("laboratorio")]
-    public required string Laboratory { get; set; }
+    public string? Laboratory { get; set; }
 
     [JsonPropertyName("origen")]
-    public required string Origin { get; set; }
+    public string? Origin { get; set; }
 
     [JsonPropertyName("estado")]
     public required string Status { get; set; }
@@ -37,11 +37,8 @@ public class CreateInventoryItemRequest
     [JsonPropertyName("fecha_registro")]
     public required DateOnly EntryDate { get; set; }
 
-    [JsonPropertyName("caja")]
-    public required string BoxId { get; set; }
-
-    [JsonPropertyName("cantidad")]
-    public required string Stock { get; set; }
+    [JsonPropertyName("ubicacion")]
+    public required string Location { get; set; }
 
     [JsonPropertyName("tipo")]
     public required string Kind { get; set; }

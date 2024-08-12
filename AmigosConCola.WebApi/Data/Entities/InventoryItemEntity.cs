@@ -15,10 +15,10 @@ public class InventoryItemEntity
     public required string MainIngredient { get; set; }
 
     [Column("format")]
-    public required string Format { get; set; }
+    public string? Format { get; set; }
 
     [Column("volume")]
-    public required string Volume { get; set; }
+    public required int Volume { get; set; }
 
     [Column("via")]
     public required string Via { get; set; }
@@ -27,10 +27,10 @@ public class InventoryItemEntity
     public required DateOnly ExpirationDate { get; set; }
 
     [Column("laboratory")]
-    public required string Laboratory { get; set; }
+    public string? Laboratory { get; set; }
 
     [Column("origin")]
-    public required string Origin { get; set; }
+    public string? Origin { get; set; }
 
     [Column("status")]
     public required string Status { get; set; }
@@ -38,12 +38,8 @@ public class InventoryItemEntity
     [Column("entry_date")]
     public required DateOnly EntryDate { get; set; }
 
-    [Column("box_id")]
-    public required string BoxId { get; set; }
-
-    /* NOTE: Maybe this should be an int. */
-    [Column("stock")]
-    public required string Stock { get; set; }
+    [Column("location")]
+    public required string Location { get; set; }
 
     [Column("kind")]
     public required string Kind { get; set; }
