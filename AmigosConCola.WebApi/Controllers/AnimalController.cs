@@ -52,6 +52,7 @@ public class AnimalController : BaseApiController
         _storeAnimalImage = storeAnimalImage;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Index(
         [FromQuery]
@@ -99,6 +100,7 @@ public class AnimalController : BaseApiController
         return Ok(response);
     }
 
+    [AllowAnonymous]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
