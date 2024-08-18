@@ -16,11 +16,12 @@ public class InventoryController : BaseApiController
 {
     private readonly CountAllInventoryItemsUseCase _countAllInventoryItems;
     private readonly CreateInventoryItemUseCase _createInventoryItem;
-    private readonly GetPaginatedInventoryItems _getPaginatedInventoryItems;
+    private readonly GetPaginatedInventoryItemsUseCase _getPaginatedInventoryItems;
     private readonly IMapper _mapper;
 
     public InventoryController(IMapper mapper, CreateInventoryItemUseCase createInventoryItem,
-        GetPaginatedInventoryItems getPaginatedInventoryItems, CountAllInventoryItemsUseCase countAllInventoryItems)
+        GetPaginatedInventoryItemsUseCase getPaginatedInventoryItems,
+        CountAllInventoryItemsUseCase countAllInventoryItems)
     {
         _mapper = mapper;
         _createInventoryItem = createInventoryItem;

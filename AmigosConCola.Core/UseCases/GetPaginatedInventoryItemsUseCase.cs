@@ -4,11 +4,11 @@ using ErrorOr;
 
 namespace AmigosConCola.Core.UseCases;
 
-public class GetPaginatedInventoryItems
+public class GetPaginatedInventoryItemsUseCase
 {
     private readonly IInventoryRepository _inventory;
 
-    public GetPaginatedInventoryItems(IInventoryRepository inventory)
+    public GetPaginatedInventoryItemsUseCase(IInventoryRepository inventory)
     {
         _inventory = inventory;
     }
